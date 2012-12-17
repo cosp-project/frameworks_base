@@ -67,12 +67,16 @@
         android:key="zen"
         android:title="@string/quick_settings_dnd_label" />
 
+<<<<<<< HEAD
     <com.android.systemui.tuner.ClockPreference
         android:title="@string/tuner_time"
         android:summary="%s"
         android:entries="@array/clock_options" />
 
     <com.android.systemui.tuner.BatteryPreference
+=======
+    <!-- <com.android.systemui.tuner.BatteryPreference
+>>>>>>> 427cabd2fe4... SystemUI: statusbar clock date customization (1/2)
         android:title="@string/battery"
         android:summary="%s"
         android:entries="@array/battery_options" />
