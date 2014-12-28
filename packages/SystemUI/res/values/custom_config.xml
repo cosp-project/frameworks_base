@@ -19,5 +19,4 @@
          * Right -> 53 (Gravity.TOP | Gravity.RIGHT)
     -->
     <integer name="hardware_ui_align">53</integer>
-
 </resources>
