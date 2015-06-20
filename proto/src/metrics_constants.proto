@@ -6507,6 +6507,7 @@ message MetricsEvent {
 
     // COSPSettings constant
     COSP_SETTINGS = 1700;
+	TILE_LOCATION_DETAIL = 1801;
 
   }
 }
