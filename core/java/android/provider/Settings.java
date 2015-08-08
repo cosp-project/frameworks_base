@@ -4851,6 +4851,15 @@ public final class Settings {
          */
         public static final String VIBRATE_ON_DISCONNECT = "vibrate_on_disconnect";
 
+         /**
+         * Swipe to screenshot
+         * @hide
+         */
+        public static final String SWIPE_TO_SCREENSHOT = "swipe_to_screenshot";
+
+        /** @hide */
+        public static final Validator SWIPE_TO_SCREENSHOT_VALIDATOR = BOOLEAN_VALIDATOR;
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
@@ -5097,6 +5106,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_DATE_FORMAT);
             PRIVATE_SETTINGS.add(DISPLAY_CUTOUT_HIDDEN);
             PRIVATE_SETTINGS.add(FINGERPRINT_SUCCESS_VIB);
+            PRIVATE_SETTINGS.add(SWIPE_TO_SCREENSHOT);
         }
 
         /**
@@ -5234,6 +5244,7 @@ public final class Settings {
             VALIDATORS.put(DISPLAY_CUTOUT_HIDDEN, DISPLAY_CUTOUT_HIDDEN_VALIDATOR);
             VALIDATORS.put(VOLUME_KEYS_CONTROL_RING_TONE,VOLUME_KEYS_CONTROL_RING_TONE_VALIDATOR);
             VALIDATORS.put(FINGERPRINT_SUCCESS_VIB, FINGERPRINT_SUCCESS_VIB_VALIDATOR);
+            VALIDATORS.put(SWIPE_TO_SCREENSHOT, SWIPE_TO_SCREENSHOT_VALIDATOR);
         }
 
         /**
