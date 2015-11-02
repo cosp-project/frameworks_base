@@ -4390,6 +4390,16 @@ public final class Settings {
          */
         public static final String APP_SWITCH_WAKE_SCREEN = "app_switch_wake_screen";
 
+        /**
+         * Volume key controls ringtone or media sound stream
+         * @hide
+         */
+        public static final String VOLUME_KEYS_CONTROL_RING_TONE =
+                "volume_keys_control_ring_tone";
+        /** @hide */
+        private static final Validator VOLUME_KEYS_CONTROL_RING_TONE_VALIDATOR =
+               BOOLEAN_VALIDATOR;
+
         /** @hide */
         public static final Validator APP_SWITCH_WAKE_SCREEN_VALIDATOR =
                 BOOLEAN_VALIDATOR;
@@ -4852,7 +4862,8 @@ public final class Settings {
             STATUSBAR_CLOCK_AM_PM_STYLE,
             STATUSBAR_CLOCK_DATE_DISPLAY,
             STATUSBAR_CLOCK_DATE_STYLE,
-            STATUSBAR_CLOCK_DATE_FORMAT
+            STATUSBAR_CLOCK_DATE_FORMAT,
+            VOLUME_KEYS_CONTROL_RING_TONE
         };
 
         /**
@@ -4919,6 +4930,7 @@ public final class Settings {
             PUBLIC_SETTINGS.add(HAPTIC_FEEDBACK_ENABLED);
             PUBLIC_SETTINGS.add(SHOW_WEB_SUGGESTIONS);
             PUBLIC_SETTINGS.add(VIBRATE_WHEN_RINGING);
+            PUBLIC_SETTINGS.add(VOLUME_KEYS_CONTROL_RING_TONE);
         }
 
         /**
@@ -5151,6 +5163,7 @@ public final class Settings {
             VALIDATORS.put(STATUSBAR_CLOCK_DATE_STYLE, STATUSBAR_CLOCK_DATE_STYLE_VALIDATOR);
             VALIDATORS.put(STATUSBAR_CLOCK_DATE_FORMAT, STATUSBAR_CLOCK_DATE_FORMAT_VALIDATOR);
             VALIDATORS.put(DISPLAY_CUTOUT_HIDDEN, DISPLAY_CUTOUT_HIDDEN_VALIDATOR);
+            VALIDATORS.put(VOLUME_KEYS_CONTROL_RING_TONE,VOLUME_KEYS_CONTROL_RING_TONE_VALIDATOR);
         }
 
         /**
