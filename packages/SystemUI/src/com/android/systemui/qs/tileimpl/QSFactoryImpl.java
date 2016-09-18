@@ -41,6 +41,7 @@ import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.ScreenrecordTile;
 import com.android.systemui.qs.tiles.ScreenshotTile;
 import com.android.systemui.qs.tiles.SmartPixelsTile;
+import com.android.systemui.qs.tiles.SoundTile;
 import com.android.systemui.qs.tiles.UserTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
@@ -107,6 +108,8 @@ public class QSFactoryImpl implements QSFactory {
                 return new ScreenrecordTile(mHost);
             case "smartpixels":
                 return new SmartPixelsTile(mHost);
+            case "sound":
+                return new SoundTile(mHost);
         }
 
         // Intent tiles.
