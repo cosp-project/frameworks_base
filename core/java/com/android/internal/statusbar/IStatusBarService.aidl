@@ -106,4 +106,5 @@ interface IStatusBarService
      */
     void toggleCameraFlash();
     void toggleNavigationBar(boolean enable);
+    void restartUI();
 }
