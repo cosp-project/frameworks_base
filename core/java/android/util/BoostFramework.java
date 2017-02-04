@@ -127,27 +127,29 @@ public class BoostFramework {
     }
 
 /** @hide */
-    public int perfLockAcquire(int duration, int... list) {
-        int ret = -1;
-        try {
-            Object retVal = mAcquireFunc.invoke(mPerf, duration, list);
-            ret = (int)retVal;
-        } catch(Exception e) {
-            Log.e(TAG,"Exception " + e);
-        }
-        return ret;
+    public void perfLockAcquire(int duration, int... list) {
+        new Thread(() -> {
+            try {
+		if (sAcquireFunc != null) {
+                    sAcquireFunc.invoke(mPerf, duration, list);
+		}
+            } catch(Exception e) {
+                if (DEBUG) Log.e(TAG,"Exception " + e);
+            }
+        }).start();
     }
 
 /** @hide */
-    public int perfLockRelease() {
-        int ret = -1;
-        try {
-            Object retVal = mReleaseFunc.invoke(mPerf);
-            ret = (int)retVal;
-        } catch(Exception e) {
-            Log.e(TAG,"Exception " + e);
-        }
-        return ret;
+    public void perfLockRelease() {
+        new Thread(() -> {
+            try {
+		if (sReleaseFunc != null) {
+                    sReleaseFunc.invoke(mPerf);
+		}
+            } catch(Exception e) {
+                if (DEBUG) Log.e(TAG,"Exception " + e);
+            }
+        }).start();
     }
 
 /** @hide */
