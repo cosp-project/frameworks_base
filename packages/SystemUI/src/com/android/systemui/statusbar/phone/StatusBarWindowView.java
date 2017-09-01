@@ -42,6 +42,7 @@ import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -852,6 +853,15 @@ public class StatusBarWindowView extends FrameLayout {
         SettingsObserver(Handler handler) {
             super(handler);
         }
+		
+    public void setLockscreenDoubleTapToSleep() {
+        boolean isDoubleTapEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN, 1, UserHandle.USER_CURRENT) == 1;
+        if (mNotificationPanel != null) {
+            mNotificationPanel.setLockscreenDoubleTapToSleep(isDoubleTapEnabled);
+        }
+    }
+}
 
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
