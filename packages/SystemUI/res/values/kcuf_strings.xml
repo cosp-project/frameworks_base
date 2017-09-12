@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2018 The KCUF Project
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE ON </string>
+    <string name="lte_off">LTE OFF</string>
+
+    <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Sound</string>
+    <string name="quick_settings_sound_ring">Ring</string>
+    <string name="quick_settings_sound_vibrate">Vibrate</string>
+    <string name="quick_settings_sound_dnd">Do not disturb</string>
+
+    <string name="statusbar_items_title">Statusbar icon</string>
+
+    <string name="lockscreen_default">Default</string>
+    <string name="lockscreen_hidden">None</string>
+    <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
+    <string name="custom_hint">Swipe from icon to launch</string>
+
+    <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Screenshot</string>
+    <string name="quick_settings_region_screenshot_label">Partial screenshot</string>
+</resources>
