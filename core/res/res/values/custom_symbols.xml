@@ -117,4 +117,9 @@
     <!-- From SignalStrength -->
     <java-symbol type="integer" name="config_LTE_antenna_bar_quantity_metric" />
     <java-symbol type="integer" name="config_LTE_RSRP_threshold_type" />
+
+    <!-- HW keys binding -->
+    <java-symbol type="anim" name="custom_app_in" />
+    <java-symbol type="anim" name="custom_app_out" />
+    <java-symbol type="integer" name="config_deviceHardwareKeys" />
 </resources>
