@@ -38,6 +38,7 @@ import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
+import com.android.systemui.qs.tiles.ScreenrecordTile;
 import com.android.systemui.qs.tiles.ScreenshotTile;
 import com.android.systemui.qs.tiles.UserTile;
 import com.android.systemui.qs.tiles.WifiTile;
@@ -101,6 +102,8 @@ public class QSFactoryImpl implements QSFactory {
                 return new NfcTile(mHost);
             case "screenshot":
                 return new ScreenshotTile(mHost);
+            case "screenrecord":
+                return new ScreenrecordTile(mHost);
         }
 
         // Intent tiles.
