@@ -278,7 +278,6 @@ import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.ScreenshotHelper;
 import com.android.internal.util.ScreenShapeHelper;
-import com.android.internal.util.omni.DeviceKeyHandler;
 import com.android.internal.util.omni.DeviceUtils;
 import com.android.internal.util.omni.OmniSwitchConstants;
 import com.android.internal.util.omni.OmniUtils;
@@ -2869,12 +2868,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
             mHasNavigationBar = NavbarUtils.isEnabled(mContext);
             updateKeydisabler();
-            mOmniSwitchRecents = Settings.System.getIntForUser(resolver,
-                    Settings.System.OMNI_NAVIGATION_BAR_RECENTS, 0,
-                    UserHandle.USER_CURRENT) == 1;
-            mProxiWakeupCheckEnabled = Settings.System.getIntForUser(resolver,
-                    Settings.System.OMNI_SYSTEM_PROXI_CHECK_ENABLED, 0,
-                    UserHandle.USER_CURRENT) != 0;
             mHasNavigationBar = DeviceUtils.deviceSupportNavigationBar(mContext);
             mUseGestureButton = Settings.System.getIntForUser(resolver,
                     Settings.System.OMNI_USE_BOTTOM_GESTURE_NAVIGATION, 0,

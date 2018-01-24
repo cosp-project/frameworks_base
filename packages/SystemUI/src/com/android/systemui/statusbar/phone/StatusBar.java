@@ -5124,7 +5124,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         return mVrMode;
     }
 
-    private boolean mShowNavBar;
 
     private SbSettingsObserver mSbSettingsObserver = new SbSettingsObserver(mHandler);
     private class SbSettingsObserver extends ContentObserver {
@@ -5756,24 +5755,4 @@ public class StatusBar extends SystemUI implements DemoMode,
                     saveImportance.run();
                 }
             };
-
-    // omni additions start
-    private void updateNavigationBar() {
-        mShowNavBar = DeviceUtils.deviceSupportNavigationBar(mContext);
-        if (DEBUG) Log.v(TAG, "updateNavigationBar=" + mShowNavBar);
-
-        if (mShowNavBar) {
-            if (mNavigationBarView == null) {
-                createNavigationBar();
-            }
-        } else {
-            if (mNavigationBarView != null){
-                FragmentHostManager fm = FragmentHostManager.get(mNavigationBarView);
-                mWindowManager.removeViewImmediate(mNavigationBarView);
-                mNavigationBarView = null;
-                fm.getFragmentManager().beginTransaction().remove(mNavigationBar).commit();
-                mNavigationBar = null;
-            }
-        }
-    }
 }
