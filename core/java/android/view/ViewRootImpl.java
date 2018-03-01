@@ -561,11 +561,11 @@ public final class ViewRootImpl implements ViewParent,
         }
 
         loadSystemProperties();
-
         DisplayMetrics dm = new DisplayMetrics();
         mAttachInfo.mDisplay.getRealMetrics(dm);
         mScreenHeight = Math.max(dm.widthPixels, dm.heightPixels);
         mScreenWidth = Math.min(dm.widthPixels, dm.heightPixels);
+        mPerf = new BoostFramework(context);
     }
 
     public static void addFirstDrawHandler(Runnable callback) {
@@ -3214,9 +3214,6 @@ public final class ViewRootImpl implements ViewParent,
         if (mAttachInfo.mViewScrollChanged) {
             if (mHaveMoveEvent && !mIsPerfLockAcquired) {
                 mIsPerfLockAcquired = true;
-                if (mPerf == null) {
-                    mPerf = new BoostFramework();
-                }
                 if (mPerf != null) {
                     String currentPackage = mContext.getPackageName();
                     mPerf.perfHint(BoostFramework.VENDOR_HINT_SCROLL_BOOST, currentPackage, -1, BoostFramework.Scroll.PREFILING);
