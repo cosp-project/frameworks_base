@@ -4816,6 +4816,12 @@ public final class Settings {
                 SettingsValidators.InclusiveIntegerRangeValidator(0, 1);
 
         /**
+         * Whether to display cross sign for a data disabled connection
+         * @hide
+         */
+         public static final String DATA_DISABLED_ICON = "data_disabled_icon";
+
+        /**
          * Whether to use icon pack for Recents
          * @hide
          */
