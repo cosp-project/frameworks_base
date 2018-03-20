@@ -1208,11 +1208,30 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     @Override
     public void onOverlayChanged() {
-        updateNotificationViews();
-        mStackScroller.onOverlayChanged();
-        mNotificationShelf.onOverlayChanged();
-        Dependency.get(DarkIconDispatcher.class).onOverlayChanged(mContext);
-        mEntryManager.onOverlayChanged();
+        reevaluateStyles();
+
+        // Clock and bottom icons
+        mNotificationPanel.onThemeChanged();
+        // The status bar on the keyguard is a special layout.
+        if (mKeyguardStatusBar != null) mKeyguardStatusBar.onThemeChanged();
+        // Recreate Indication controller because internal references changed
+        mKeyguardIndicationController =
+                SystemUIFactory.getInstance().createKeyguardIndicationController(mContext,
+                        mStatusBarWindow.findViewById(R.id.keyguard_indication_area),
+                        mNotificationPanel.getLockIcon());
+        mNotificationPanel.setKeyguardIndicationController(mKeyguardIndicationController);
+        mKeyguardIndicationController
+                .setStatusBarKeyguardViewManager(mStatusBarKeyguardViewManager);
+        mKeyguardIndicationController.setVisible(mState == StatusBarState.KEYGUARD);
+        mKeyguardIndicationController.setDozing(mDozing);
+        if (mStatusBarKeyguardViewManager != null) {
+            mStatusBarKeyguardViewManager.onThemeChanged();
+        }
+        if (mAmbientIndicationContainer instanceof AutoReinflateContainer) {
+            ((AutoReinflateContainer) mAmbientIndicationContainer).inflateLayout();
+        }
+
+        mEntryManager.updateNotificationsOnDensityOrFontScaleChanged();
         if (mBrightnessMirrorController != null) {
             mBrightnessMirrorController.onOverlayChanged();
         }
