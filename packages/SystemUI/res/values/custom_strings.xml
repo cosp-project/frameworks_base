@@ -90,4 +90,7 @@
     <string name="screenrecord_hide_hint">Hide hint</string>
     <string name="screenrecord_show_hint">Show hint</string>
 
+    <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">Smart pixels</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Auto-enabled smart pixels</string>
 </resources>
