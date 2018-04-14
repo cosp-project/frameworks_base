@@ -56,6 +56,9 @@
     <string name="select_keycode">Select Keyboard Button</string>
     <string name="navbar_editor_title">Editor</string>
     <string name="navbar_editor_summary">Configure navigaton bar</string>
+	
+    <!-- SysUI Tuner: Button that controls inversion of layout of navigation bar [CHAR LIMIT=60] -->
+    <string name="nav_bar_layout_inverse">Invert layout</string>
 
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">Screenshot</string>
