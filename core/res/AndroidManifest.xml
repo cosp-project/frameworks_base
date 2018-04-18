@@ -4329,6 +4329,12 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name="com.android.server.smartpixels.SmartPixelsReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         <receiver android:name="com.android.server.stats.StatsCompanionService$AnomalyAlarmReceiver"
                   android:permission="android.permission.STATSCOMPANION"
                   android:exported="false">
@@ -4416,6 +4422,8 @@
                     android:resource="@xml/autofill_compat_accessibility_service" />
         </service>
 
-</application>
+        <service android:name="com.android.server.smartpixels.SmartPixelsService"
+                 android:exported="true" />
 
+</application>
 </manifest>
