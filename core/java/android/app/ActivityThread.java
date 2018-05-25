@@ -5800,6 +5800,10 @@ public final class ActivityThread extends ClientTransactionHandler {
                 mResourcesManager.getConfiguration().getLocales());
 
         if (!Process.isIsolated()) {
+            ux_perf = new BoostFramework(appContext);
+        }
+
+        if (!Process.isIsolated()) {
             final int oldMask = StrictMode.allowThreadDiskWritesMask();
             try {
                 setupGraphicsSupport(appContext);
