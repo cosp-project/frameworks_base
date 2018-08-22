@@ -318,7 +318,7 @@
                   android:theme="@style/ExTunerSettings"
                   android:label="@string/nav_bar"
                   android:process=":tuner"
-                  android:parentActivityName="com.xenonhd.settings.fragments.NavigationSettings"
+                  android:parentActivityName="com.cosp.settings.fragments.NavbarSettings"
                   android:exported="true">
         </activity>
 
