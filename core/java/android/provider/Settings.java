@@ -4256,9 +4256,17 @@ public final class Settings {
         public static final Validator HOME_WAKE_SCREEN_VALIDATOR =
                 BOOLEAN_VALIDATOR;
 
+
         /**
-         * Whether to wake the screen with the back key, the value is boolean.
-         * 0 = 0ff, 1 = on
+         * @hide
+         */
+        public static final String OMNI_QS_QUICKBAR_COLUMNS = "qs_quickbar_columns";
+
+        /** @hide */
+        private static final Validator OMNI_QS_QUICKBAR_COLUMNS_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+        /**
          * @hide
          */
         public static final String BACK_WAKE_SCREEN = "back_wake_screen";
@@ -4591,7 +4599,8 @@ public final class Settings {
             OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT,
             OMNI_BOTTOM_GESTURE_SWIPE_LIMIT,
             LOCK_QS_DISABLED,
-            NOTIFICATION_LIGHT_PULSE
+            NOTIFICATION_LIGHT_PULSE,
+            OMNI_QS_QUICKBAR_COLUMNS
         };
 
         /**
@@ -4746,6 +4755,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SCREENSHOT_DEFAULT_MODE);
             PRIVATE_SETTINGS.add(OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT);
             PRIVATE_SETTINGS.add(OMNI_BOTTOM_GESTURE_SWIPE_LIMIT);
+            PRIVATE_SETTINGS.add(OMNI_QS_QUICKBAR_COLUMNS);
         }
 
         /**
@@ -4872,6 +4882,7 @@ public final class Settings {
                     OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT_VALIDATOR);
             VALIDATORS.put(OMNI_BOTTOM_GESTURE_SWIPE_LIMIT,
                     OMNI_BOTTOM_GESTURE_SWIPE_LIMIT_VALIDATOR);
+            VALIDATORS.put(OMNI_QS_QUICKBAR_COLUMNS, OMNI_QS_QUICKBAR_COLUMNS_VALIDATOR);
         }
 
         /**
