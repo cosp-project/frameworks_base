@@ -107,8 +107,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mContentResolver = getContext().getContentResolver();
         mKeyguardMonitor = Dependency.get(KeyguardMonitor.class);
         mNetworkController = Dependency.get(NetworkController.class);
-        mStatusBarComponent = SysUiServiceProvider.getComponent(getContext(), StatusBar.class);
-        mSettingsObserver.observe();
+        mStatusBarComponent = SysUiServiceProvider.getComponent(getContext(), StatusBar.class);        
     }
 
     @Override
@@ -136,6 +135,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         initEmergencyCryptkeeperText();
 	animateHide(mClockView, false, false);
         initOperatorName();
+        mSettingsObserver.observe();
+        updateSettings(true);
     }
 
     @Override
