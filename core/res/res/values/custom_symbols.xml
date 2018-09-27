@@ -98,6 +98,9 @@
     <java-symbol type="integer" name="nav_gesture_swipe_timout" />
     <java-symbol type="integer" name="nav_gesture_move_threshold" />
 
+    <!-- Notification app name tint -->
+    <java-symbol type="bool" name="config_allowNotificationAppNameTextTinting" />
+
     <!-- Screenrecord -->
     <java-symbol type="bool" name="config_enableScreenrecordChord" />
 </resources>
