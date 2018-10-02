@@ -4372,6 +4372,9 @@ public final class Settings {
         public static final Validator CAMERA_LAUNCH_VALIDATOR =
                 BOOLEAN_VALIDATOR;
 
+        /** @hide */
+        public static final String IGNORE_RSSNR = "ignore_rssnr";        
+
         /**
          * some devices have a extra hw button e.g. n3 on the back on the
          * fingerprint sensor. allow mapping button to key
