@@ -124,4 +124,7 @@
     <java-symbol type="bool" name="config_multiColorBatteryLed" />
     <java-symbol type="bool" name="config_multiColorNotificationLed" />
     <java-symbol type="bool" name="config_ledCanPulse" />
+
+    <!-- Oreo's recents component activity -->
+    <java-symbol type="string" name="config_recentsComponentNameOreo" />
 </resources>
