@@ -8547,10 +8547,9 @@ public class PackageManagerService extends IPackageManager.Stub
                     // Ignore entries which are not packages
                     continue;
                 }
-                // Ignore vendor overlays that should live on system/app
-                if ((scanDir.getPath() == VENDOR_OVERLAY_DIR || scanDir.getPath() == PRODUCT_OVERLAY_DIR)
+                // Ignore vendor overlays that should live on system/overlay
+                if ((scanDir.getPath() == PACKAGE_OVERLAY_DIRS[1] || scanDir.getPath() == PRODUCT_OVERLAY_DIR)
                         && Arrays.asList(systemOverlayPackages).contains(file.getName())){
-                    Slog.w(TAG, "Ignoring " + file.getAbsolutePath() + " because is already installed on /system/app/");
                     continue;
                 }
                 parallelPackageParser.submit(file, parseFlags);
