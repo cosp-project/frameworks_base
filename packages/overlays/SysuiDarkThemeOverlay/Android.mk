@@ -11,4 +11,4 @@ LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
 LOCAL_PACKAGE_NAME := SysuiDarkThemeOverlay
 LOCAL_SDK_VERSION := current
 
-include $(BUILD_PACKAGE)
+include $(BUILD_SYSTEM_PACKAGE)
