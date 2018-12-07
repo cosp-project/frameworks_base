@@ -4490,6 +4490,24 @@ public final class Settings {
         public static final String SCREENRECORD_QUALITY_MODE = "screenrecord_quality_mode";
 
         /**
+         * @hide
+         */
+        public static final String OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT =
+                 "bottom_gesture_navigation_trigger_timeout";
+
+        private static final Validator OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT_VALIDATOR =
+                 ANY_INTEGER_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String OMNI_BOTTOM_GESTURE_SWIPE_LIMIT =
+                 "bottom_gesture_navigation_swipe_limit";
+
+        private static final Validator OMNI_BOTTOM_GESTURE_SWIPE_LIMIT_VALIDATOR =
+                 ANY_INTEGER_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4554,6 +4572,8 @@ public final class Settings {
             OMNI_QS_LAYOUT_ROWS,
             OMNI_USE_BOTTOM_GESTURE_NAVIGATION,
             OMNI_NAVIGATION_BAR_SHOW,
+            OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT,
+            OMNI_BOTTOM_GESTURE_SWIPE_LIMIT,
         };
 
         /**
@@ -4705,6 +4725,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNI_USE_BOTTOM_GESTURE_NAVIGATION);
             PRIVATE_SETTINGS.add(OMNI_NAVIGATION_BAR_SHOW);
             PRIVATE_SETTINGS.add(SCREENSHOT_DEFAULT_MODE);
+            PRIVATE_SETTINGS.add(OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT);
+            PRIVATE_SETTINGS.add(OMNI_BOTTOM_GESTURE_SWIPE_LIMIT);
         }
 
         /**
@@ -4826,6 +4848,10 @@ public final class Settings {
             VALIDATORS.put(OMNI_USE_BOTTOM_GESTURE_NAVIGATION,
                     OMNI_USE_BOTTOM_GESTURE_NAVIGATION_VALIDATOR);
             VALIDATORS.put(OMNI_NAVIGATION_BAR_SHOW, OMNI_NAVIGATION_BAR_SHOW_VALIDATOR);
+            VALIDATORS.put(OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT,
+                    OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT_VALIDATOR);
+            VALIDATORS.put(OMNI_BOTTOM_GESTURE_SWIPE_LIMIT,
+                    OMNI_BOTTOM_GESTURE_SWIPE_LIMIT_VALIDATOR);
         }
 
         /**

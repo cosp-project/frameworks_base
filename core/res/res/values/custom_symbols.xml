@@ -88,8 +88,9 @@
     <!-- Whether to allow process with media UID to access CameraServiceProxy -->
     <java-symbol type="bool" name="config_allowMediaUidForCameraServiceProxy" />
   
-    <java-symbol type="dimen" name="nav_gesture_swipe_min_length" />
-    <java-symbol type="dimen" name="nav_gesture_long_press_max_length" />
+    <java-symbol type="integer" name="nav_gesture_swipe_min_length" />
+    <java-symbol type="integer" name="nav_gesture_swipe_timout" />
+    <java-symbol type="integer" name="nav_gesture_move_threshold" />
 
     <!-- Screenrecord -->
     <java-symbol type="bool" name="config_enableScreenrecordChord" />
