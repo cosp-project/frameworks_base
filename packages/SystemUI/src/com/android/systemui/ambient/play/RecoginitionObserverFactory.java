@@ -52,21 +52,19 @@ public class RecoginitionObserverFactory extends RecoginitionObserver {
         public void run() {
             Log.d(TAG, "Started reading recorder...");
 
-            while (isRecording && mBuffer != null) {
-                int read = 0;
+            while (!isInterrupted() && mBuffer != null && mBufferIndex < mBuffer.length) {
+                int read;
                 synchronized (this) {
-                    if (mRecorder != null) {
-                        read = mRecorder.read(mBuffer, 0, mBuffer.length);
-                        if (read == AudioRecord.ERROR_BAD_VALUE) {
-                            Log.d(TAG, "BAD_VALUE while reading recorder");
-                            break;
-                        } else if (read == AudioRecord.ERROR_INVALID_OPERATION) {
-                            Log.d(TAG, "INVALID_OPERATION while reading recorder");
-                            break;
-                        } else if (read >= 0) {
-                            // Copy recording to a new array before StopRecording is called, because we are clearing the mBuffer there.
-                            System.arraycopy(mBuffer, 0, buffCopy, 0, buffCopy.length);
-                        }
+                    read = mRecorder.read(mBuffer, mBufferIndex, Math.min(512, mBuffer.length - mBufferIndex));
+
+                    if (read == AudioRecord.ERROR_BAD_VALUE) {
+                        Log.d(TAG, "BAD_VALUE while reading recorder");
+                        break;
+                    } else if (read == AudioRecord.ERROR_INVALID_OPERATION) {
+                        Log.d(TAG, "INVALID_OPERATION while reading recorder");
+                        break;
+                    } else if (read >= 0) {
+                        mBufferIndex += read;
                     }
                 }
 
