@@ -50,7 +50,6 @@ public class RecoginitionObserverFactory extends RecoginitionObserver {
         private byte[] buffCopy = new byte[SAMPLE_RATE * 10 * 2];
 
         public void run() {
-            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
             Log.d(TAG, "Started reading recorder...");
 
             while (isRecording && mBuffer != null) {
@@ -106,7 +105,6 @@ public class RecoginitionObserverFactory extends RecoginitionObserver {
             if (!isRecording) {
                 new Thread() {
                     public void run() {
-                        android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
                         // Allow only one upload call at a time
                         String output_xml = sendAudioData(buffCopy, buffCopy.length);
                         parseXmlResult(output_xml);
