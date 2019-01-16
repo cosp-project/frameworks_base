@@ -32,7 +32,6 @@ import java.text.NumberFormat;
 
 import com.android.internal.util.custom.weather.WeatherClient;
 
-import com.android.internal.util.custom.ambient.play.AmbientPlayHistoryManager;
 import com.android.internal.util.custom.ambient.play.AmbientPlayProvider;
 
 public class Utils {
@@ -292,7 +291,6 @@ public class Utils {
                 || pkg.packageName.equals(sSharedSystemSharedLibPackageName)
                 || pkg.packageName.equals(PrintManager.PRINT_SPOOLER_PACKAGE_NAME)
                 || pkg.packageName.equals(WeatherClient.SERVICE_PACKAGE)
-                || pkg.packageName.equals(AmbientPlayHistoryManager.SERVICE_PACKAGE)
                 || pkg.packageName.equals(AmbientPlayProvider.SERVICE_PACKAGE)
                 || isDeviceProvisioningPackage(resources, pkg.packageName);
     }

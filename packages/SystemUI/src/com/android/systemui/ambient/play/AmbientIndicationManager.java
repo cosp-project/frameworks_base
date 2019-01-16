@@ -21,7 +21,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -39,7 +38,6 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Log;
 
-import com.android.internal.util.custom.ambient.play.AmbientPlayHistoryManager;
 import com.android.internal.util.custom.ambient.play.AmbientPlayProvider.Observable;
 import com.android.internal.util.custom.ambient.play.AmbientPlayQuietPeriod;
 import com.android.systemui.R;
@@ -305,15 +303,10 @@ public class AmbientIndicationManager {
     public void dispatchRecognitionResult(Observable observed) {
         isRecognitionObserverBusy = false;
         lastUpdated = System.currentTimeMillis();
-        if (!isRecognitionEnabled()) {
-            dispatchRecognitionNoResult();
-            return;
-        }
-        if (mIsRecognitionNotificationEnabled) {
+        NO_MATCH_COUNT = 0;
+        if (isRecognitionNotificationEnabled) {
             showNotification(observed.Song, observed.Artist);
         }
-        AmbientPlayHistoryManager.addSong(observed.Song, observed.Artist, mContext);
-        AmbientPlayHistoryManager.sendMatchBroadcast(mContext);
         for (AmbientIndicationManagerCallback cb : mCallbacks) {
             try {
                 cb.onRecognitionResult(observed);
@@ -373,11 +366,6 @@ public class AmbientIndicationManager {
         mBuilder.setTicker(String.format(mContext.getResources().getString(
                 R.string.ambient_recognition_information), song, artist));
         mBuilder.setExtras(extras);
-
-        Intent historyIntent = new Intent();
-        historyIntent.setComponent(new ComponentName("com.android.settings", "com.android.settings.Settings$AmbientPlayHistoryActivity"));
-        PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, historyIntent, 0);
-        mBuilder.setContentIntent(pendingIntent);
 
         NotificationManager mNotificationManager =
                 (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
