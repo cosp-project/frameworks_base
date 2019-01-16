@@ -216,19 +216,15 @@ public class RecoginitionObserverFactory extends RecoginitionObserver {
      * pending data, if any, will be sent to the API to get a match.
      */
     public void stopRecording() {
-        if (mRecorder != null && mRecorder.getState() == AudioRecord.STATE_INITIALIZED && mRecThread != null && mRecThread.isAlive()) {
-            try {
-                Log.d(TAG, "Stopping recorder");
-                isRecording = false;
-                mRecorder.stop();
+        if (mRecThread != null && mRecThread.isAlive()) {
+            Log.d(TAG, "Interrupting recorder thread");
+            mRecThread.interrupt();
+        }
 
-                // Don't forget to release the native resources.
-                mRecorder.release();
-                mRecorder = null;
-                mRecThread = null;
-            } catch (Exception e) {
-                Log.e(TAG, "Exception occured ", e);
-            }
+        if (mRecorder != null) {
+            Log.d(TAG, "Stopping recorder");
+            mRecorder.stop();
+            mRecorder = null;
         }
     }
 }
