@@ -16,11 +16,9 @@
 
 package com.android.systemui.ambient.play;
 
-import com.android.internal.util.custom.ambient.play.AmbientPlayProvider.Observable;
-
 public interface AmbientIndicationManagerCallback {
 
-    void onRecognitionResult(Observable observed);
+    void onRecognitionResult(RecognitionObserver.Observable observed);
 
     void onRecognitionNoResult();
 
