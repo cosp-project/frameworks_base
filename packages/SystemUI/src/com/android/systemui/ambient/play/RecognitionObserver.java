@@ -50,6 +50,7 @@ public class RecognitionObserver implements AmbientIndicationManagerCallback {
     private RecorderThread mRecThread;
     private boolean isRecording = false;
     private AmbientIndicationManager mManager;
+    private boolean isRecognitionEnabled;
     private Context mContext;
 
     RecognitionObserver(Context context, AmbientIndicationManager manager) {
@@ -76,7 +77,8 @@ public class RecognitionObserver implements AmbientIndicationManagerCallback {
     @Override
     public void onSettingsChanged(String key, boolean newValue) {
         if (key.equals(Settings.System.AMBIENT_RECOGNITION)) {
-            if (!mManager.isRecognitionEnabled()) {
+            isRecognitionEnabled = newValue;
+            if (!isRecognitionEnabled) {
                 if (mManager.DEBUG)
                     Log.d(TAG, "Recognition disabled, stopping all and triggering dispatchRecognitionNoResult");
                 stopRecording();
@@ -99,7 +101,7 @@ public class RecognitionObserver implements AmbientIndicationManagerCallback {
             while (isRecording && mBuffer != null) {
                 int read = 0;
                 synchronized (this) {
-                    if (!mManager.isRecognitionEnabled()) {
+                    if (!isRecognitionEnabled) {
                         break;
                     }
                     if (mRecorder != null) {
@@ -116,7 +118,7 @@ public class RecognitionObserver implements AmbientIndicationManagerCallback {
                             System.arraycopy(mBuffer, 0, buffCopy, 0, buffCopy.length);
                         }
                     }
-                    if (!mManager.isRecognitionEnabled()) {
+                    if (!isRecognitionEnabled) {
                         break;
                     }
                 }
@@ -129,7 +131,7 @@ public class RecognitionObserver implements AmbientIndicationManagerCallback {
         }
 
         private void tryMatchCurrentBuffer() {
-            if (!mManager.isRecognitionEnabled()) {
+            if (!isRecognitionEnabled) {
                 stopRecording();
                 return;
             }
@@ -165,7 +167,7 @@ public class RecognitionObserver implements AmbientIndicationManagerCallback {
             stopRecording();
             // If the recording is still active and we have no match, don't do anything. Otherwise,
             // report the result.
-            if (!mManager.isRecognitionEnabled() || isNullResult(observed)) {
+            if (!isRecognitionEnabled || isNullResult(observed)) {
                 if (mManager.DEBUG) Log.d(TAG, "Reporting onNoMatch");
                 mManager.dispatchRecognitionNoResult();
             } else {
@@ -177,40 +179,42 @@ public class RecognitionObserver implements AmbientIndicationManagerCallback {
     }
 
     void startRecording() {
-        if (!mManager.isRecognitionEnabled()) {
-            stopRecording();
-            mManager.dispatchRecognitionError();
-            return;
-        }
-        if (isRecording) {
+        if (!isRecognitionEnabled || isRecording) {
             return;
         }
         isRecording = true;
-        new Thread() {
-            @Override
-            public void run() {
-                Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
-                try {
+        // Only start recording audio if we have internet connectivity.
+        if (mManager.getNetworkStatus() != -1) {
+            new Thread() {
+                @Override
+                public void run() {
+                    Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
                     try {
-                        // Make sure buffer is cleared before recording starts.
-                        mBuffer = new byte[bufferSize];
-                        mRecorder = new AudioRecord(MediaRecorder.AudioSource.CAMCORDER, SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, minBufSize);
-                        mRecThread = new RecorderThread();
-                        mRecorder.startRecording();
-                        mRecThread.start();
-                    } catch (Exception e) {
-                        if (mManager.DEBUG)
-                            Log.d(TAG, "Cannot start recording for recognition", e);
+                        try {
+                            // Make sure buffer is cleared before recording starts.
+                            mBuffer = new byte[bufferSize];
+                            mRecorder = new AudioRecord(MediaRecorder.AudioSource.CAMCORDER, SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, minBufSize);
+                            mRecThread = new RecorderThread();
+                            mRecorder.startRecording();
+                            mRecThread.start();
+                        } catch (Exception e) {
+                            if (mManager.DEBUG)
+                                Log.d(TAG, "Cannot start recording for recognition", e);
+                            mManager.dispatchRecognitionError();
+                        }
+                        Thread.currentThread().sleep(mManager.getRecordingMaxTime());
+                    } catch (Exception e2) {
                         mManager.dispatchRecognitionError();
                     }
-                    Thread.currentThread().sleep(mManager.getRecordingMaxTime());
-                } catch (Exception e2) {
-                    mManager.dispatchRecognitionError();
+                    // Stop recording, process audio and post result.
+                    stopRecording();
                 }
-                // Stop recording, process audio and post result.
-                stopRecording();
-            }
-        }.start();
+            }.start();
+        } else {
+            if (mManager.DEBUG) Log.d(TAG, "No connectivity, triggering dispatchRecognitionError");
+            stopRecording();
+            mManager.dispatchRecognitionError();
+        }
     }
 
     private void stopRecording() {

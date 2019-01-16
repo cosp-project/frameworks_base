@@ -105,12 +105,6 @@
     <!-- Whether auto face unlock is enabled by default -->
     <java-symbol type="bool" name="config_autoFaceUnlockEnabledByDefault" />
 
-    <!-- Default start time for Ambient Play quiet period -->
-    <java-symbol type="integer" name="config_defaultAmbientPlayQuitPeriodStartTime" />
-
-    <!-- Default end time for Ambient Play quiet period -->
-    <java-symbol type="integer" name="config_defaultAmbientPlayQuitPeriodEndTime" />
-
     <!-- Whether to allow process with media UID to access CameraServiceProxy -->
     <java-symbol type="bool" name="config_allowMediaUidForCameraServiceProxy" />
 
