@@ -1681,7 +1681,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                     mBackdrop.setAlpha(1f);
                 }
                 mStatusBarWindowManager.setBackdropShowing(true);
-                mColorExtractor.setMediaBackdropVisible(true);
                 metaDataChanged = true;
                 if (DEBUG_MEDIA) {
                     Log.v(TAG, "DEBUG_MEDIA: Fading in album artwork");
@@ -1733,7 +1732,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                 if (DEBUG_MEDIA) {
                     Log.v(TAG, "DEBUG_MEDIA: Fading out album artwork");
                 }
-                mColorExtractor.setMediaBackdropVisible(false);
                 boolean cannotAnimateDoze = mDozing && !ScrimState.AOD.getAnimateChange();
                 if (mFingerprintUnlockController.getMode()
                         == FingerprintUnlockController.MODE_WAKE_AND_UNLOCK_PULSING
@@ -2111,8 +2109,8 @@ public class StatusBar extends SystemUI implements DemoMode,
      * or not when showing the bouncer.
      *
      * We want to hide it when:
-     * • User swipes up on the keyguard
-     * • Locked activity that doesn't show a status bar requests the bouncer
+     *  User swipes up on the keyguard
+     *  Locked activity that doesn't show a status bar requests the bouncer
      *
      * @param animate should the change of the icons be animated.
      */
