@@ -21,9 +21,6 @@ import static android.app.StatusBarManager.WINDOW_STATE_SHOWING;
 import static android.app.StatusBarManager.windowStateToString;
 import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN_OR_SPLIT_SCREEN_SECONDARY;
 
-import static android.provider.Settings.Secure.AMBIENT_RECOGNITION;
-import static android.provider.Settings.Secure.AMBIENT_RECOGNITION_KEYGUARD;
-
 import static com.android.systemui.keyguard.WakefulnessLifecycle.WAKEFULNESS_ASLEEP;
 import static com.android.systemui.keyguard.WakefulnessLifecycle.WAKEFULNESS_AWAKE;
 import static com.android.systemui.keyguard.WakefulnessLifecycle.WAKEFULNESS_WAKING;
@@ -41,9 +38,6 @@ import static com.android.systemui.statusbar.phone.BarTransitions.MODE_TRANSLUCE
 import static com.android.systemui.statusbar.phone.BarTransitions.MODE_TRANSPARENT;
 import static com.android.systemui.statusbar.phone.BarTransitions.MODE_WARNING;
 
-import android.ambient.AmbientIndicationManager;
-import android.ambient.AmbientIndicationManagerCallback;
-import android.ambient.play.RecoginitionObserver.Observable;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.NonNull;
@@ -58,7 +52,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.StatusBarManager;
 import android.app.TaskStackBuilder;
-import android.app.UiModeManager;
 import android.app.WallpaperColors;
 import android.app.WallpaperInfo;
 import android.app.WallpaperManager;
@@ -93,18 +86,12 @@ import android.media.AudioAttributes;
 import android.media.MediaMetadata;
 import android.metrics.LogMaker;
 import android.net.Uri;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.BatteryManager;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
-import android.os.Process;
 import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -170,9 +157,6 @@ import com.android.systemui.RecentsComponent;
 import com.android.systemui.SystemUI;
 import com.android.systemui.SystemUIFactory;
 import com.android.systemui.UiOffloadThread;
-import com.android.systemui.ambient.AmbientIndicationContainer;
-import com.android.systemui.ambient.AmbientIndicationNotification;
-import com.android.systemui.ambient.play.RecoginitionObserverFactory;
 import com.android.systemui.assist.AssistManager;
 import com.android.systemui.charging.WirelessChargingAnimation;
 import com.android.systemui.classifier.FalsingLog;
@@ -346,12 +330,6 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     /** If true, the lockscreen will show a distinct wallpaper */
     private static final boolean ENABLE_LOCKSCREEN_WALLPAPER = true;
-
-    /** Whether to force dark theme if Configuration.UI_MODE_NIGHT_YES. */
-    private static final boolean DARK_THEME_IN_NIGHT_MODE = true;
-
-    /** Whether to switch the device into night mode in battery saver. */
-    private static final boolean NIGHT_MODE_IN_BATTERY_SAVER = true;
 
     /**
      * Never let the alpha become zero for surfaces that draw with SRC - otherwise the RenderNode
@@ -650,31 +628,6 @@ public class StatusBar extends SystemUI implements DemoMode,
     private boolean mVibrateOnOpening;
     private VibratorHelper mVibratorHelper;
 
-    private AmbientIndicationNotification mAmbientNotification;
-    private RecoginitionObserverFactory mRecognition;
-    private boolean mRecognitionEnabled;
-
-    /* Interval indicating when AP-Recogntion will run, that is 2 minutes and 30 seconds */
-    private static final int AP_DURATION = 150000;
-    /* Interval indicating the max recording time. Default is 10 seconds */
-    private static final int AMBIENT_RECOGNITION_INTERVAL_MAX = 10000;
-    // Interval to clean the view after song is detected. (Default 3 minutes)
-    //This is needed as all / most of the work is now done in Worker thread.
-    private static final int AMBIENT_VIEW_CLEAR_INTERVAL = 180000;
-
-    private Handler ambientClearingHandler;
-    private Runnable ambientClearingRunnable;
-
-
-    private boolean mIsOnPowerSaveMode;
-    private static final String AMBIENT_PLAY_INTENT = "ambient_play_alarm_intent";
-    private static final IntentFilter AP_INTENT_FILTER = new IntentFilter(AMBIENT_PLAY_INTENT);
-    private static final Intent AP_INTENT = new Intent(AMBIENT_PLAY_INTENT);
-    private static final int AP_REQUEST_CODE = 6969;
-    private AlarmManager alarmManager;
-    private BatteryManager mBatteryManager;
-    private static int NO_MATCH_COUNT = 0;
-
     @Override
     public void start() {
         mGroupManager = Dependency.get(NotificationGroupManager.class);
@@ -731,8 +684,6 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
 
-        mBatteryManager = (BatteryManager) mContext.getSystemService(Context.BATTERY_SERVICE);
-
         mDeviceProvisionedController = Dependency.get(DeviceProvisionedController.class);
 
         mBarService = IStatusBarService.Stub.asInterface(
@@ -773,9 +724,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         mWallpaperChangedReceiver.onReceive(mContext, null);
 
         mLockscreenUserManager.setUpWithPresenter(this, mEntryManager);
-        mContext.registerReceiver(ambientReceiver, AP_INTENT_FILTER);
-        mAmbientSettingsObserver.observe();
-        mAmbientSettingsObserver.update();
         mCommandQueue.disable(switches[0], switches[6], false /* animate */);
         setSystemUiVisibility(switches[1], switches[7], switches[8], 0xffffffff,
                 fullscreenStackBounds, dockedStackBounds);
@@ -840,8 +788,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         KeyguardUpdateMonitor.getInstance(mContext).registerCallback(mUpdateCallback);
         putComponent(DozeHost.class, mDozeServiceHost);
 
-        AmbientIndicationManager.getInstance(mContext).registerCallback(mAmbientCallback);
-
         mScreenPinningRequest = new ScreenPinningRequest(mContext);
         mFalsingManager = FalsingManager.getInstance(mContext);
 
@@ -892,31 +838,23 @@ public class StatusBar extends SystemUI implements DemoMode,
                 .createNotificationIconAreaController(context, this);
         inflateShelf();
         mNotificationIconAreaController.setupShelf(mNotificationShelf);
-        mStackScroller.setIconAreaController(mNotificationIconAreaController);
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mNotificationIconAreaController);
         FragmentHostManager.get(mStatusBarWindow)
                 .addTagListener(CollapsedStatusBarFragment.TAG, (tag, fragment) -> {
                     CollapsedStatusBarFragment statusBarFragment =
                             (CollapsedStatusBarFragment) fragment;
                     statusBarFragment.initNotificationIconArea(mNotificationIconAreaController);
-                    PhoneStatusBarView oldStatusBarView = mStatusBarView;
                     mStatusBarView = (PhoneStatusBarView) fragment.getView();
                     mStatusBarView.setBar(this);
                     mStatusBarView.setPanel(mNotificationPanel);
                     mStatusBarView.setScrimController(mScrimController);
                     mStatusBarView.setBouncerShowing(mBouncerShowing);
-                    if (oldStatusBarView != null) {
-                        float fraction = oldStatusBarView.getExpansionFraction();
-                        boolean expanded = oldStatusBarView.isExpanded();
-                        mStatusBarView.panelExpansionChanged(fraction, expanded);
-                    }
                     if (mHeadsUpAppearanceController != null) {
                         // This view is being recreated, let's destroy the old one
                         mHeadsUpAppearanceController.destroy();
                     }
                     mHeadsUpAppearanceController = new HeadsUpAppearanceController(
                             mNotificationIconAreaController, mHeadsUpManager, mStatusBarWindow);
-                    mStatusBarWindow.setStatusBarView(mStatusBarView);
                     setAreThereNotifications();
                     checkBarModes();
                 }).getFragmentManager()
@@ -979,21 +917,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                         mNotificationPanel.getLockIcon());
         mNotificationPanel.setKeyguardIndicationController(mKeyguardIndicationController);
 
+
         mAmbientIndicationContainer = mStatusBarWindow.findViewById(
                 R.id.ambient_indication_container);
-        if (mAmbientIndicationContainer != null) {
-            ((AmbientIndicationContainer) mAmbientIndicationContainer).initializeView(this);
-        }
-
-        // Initialize handler and runnable
-        ambientClearingHandler = new Handler();
-        ambientClearingRunnable = new Runnable(){
-            @Override
-            public void run() {
-                mAmbientIndicationContainer.setVisibility(View.INVISIBLE);
-                ((AmbientIndicationContainer) mAmbientIndicationContainer).hideIndication();
-            }
-        };
 
         // set the initial view visibility
         setAreThereNotifications();
@@ -1002,14 +928,9 @@ public class StatusBar extends SystemUI implements DemoMode,
         mBatteryController.addCallback(new BatteryStateChangeCallback() {
             @Override
             public void onPowerSaveChanged(boolean isPowerSave) {
-                mIsOnPowerSaveMode = isPowerSave;
                 mHandler.post(mCheckBarModes);
                 if (mDozeServiceHost != null) {
                     mDozeServiceHost.firePowerSaveChanged(isPowerSave);
-                }
-
-                if (NIGHT_MODE_IN_BATTERY_SAVER) {
-                    updateTheme(true);
                 }
             }
 
@@ -1156,76 +1077,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         ThreadedRenderer.overrideProperty("ambientRatio", String.valueOf(1.5f));
 
         mFlashlightController = Dependency.get(FlashlightController.class);
-
-        mAmbientNotification = new AmbientIndicationNotification(mContext);
     }
-
-    private AmbientIndicationManagerCallback mAmbientCallback = new AmbientIndicationManagerCallback() {
-        @Override
-        public void onRecognitionResult(Observable observed) {
-            if (observed.Song == null && observed.Artist == null) return;
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    ((AmbientIndicationContainer) mAmbientIndicationContainer)
-                                .setIndication(observed.Song, observed.Artist);
-                    mAmbientIndicationContainer.setVisibility(View.VISIBLE);
-                    mAmbientNotification.show(observed.Song, observed.Artist);
-
-                    if (NO_MATCH_COUNT != 0)
-                        NO_MATCH_COUNT = 0;
-
-                    try {
-                        ambientClearingHandler.removeCallbacks(ambientClearingRunnable);
-                        ambientClearingHandler.postDelayed(ambientClearingRunnable, AMBIENT_VIEW_CLEAR_INTERVAL);
-                    } catch (Exception e) {
-                        // This too shall pass
-                    }
-                    doStopAmbientRecognition();
-                }
-            });
-        }
-
-        @Override
-        public void onRecognitionNoResult() {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        ambientClearingHandler.removeCallbacks(ambientClearingRunnable);
-                        ambientClearingHandler.postDelayed(ambientClearingRunnable, 0);
-                    } catch (Exception e) {
-                        // This too shall pass
-                    }
-
-                    if (!mBatteryManager.isCharging())
-                        NO_MATCH_COUNT++;
-
-                    doStopAmbientRecognition();
-                }
-            });
-        }
-
-        @Override
-        public void onRecognitionError() {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        ambientClearingHandler.removeCallbacks(ambientClearingRunnable);
-                        ambientClearingHandler.postDelayed(ambientClearingRunnable, 0);
-                    } catch (Exception e) {
-                        // This too shall pass
-                    }
-
-                    if (!mBatteryManager.isCharging())
-                        NO_MATCH_COUNT++;
-
-                    doStopAmbientRecognition();
-                }
-            });
-        }
-    };
 
     protected void createNavigationBar() {
         mNavigationBarView = NavigationBarFragment.create(mContext, (tag, fragment) -> {
@@ -1812,12 +1664,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                 && mStatusBarKeyguardViewManager.isOccluded();
 
         final boolean hasArtwork = artworkDrawable != null;
-        mColorExtractor.setHasBackdrop(hasArtwork);
-        if (mScrimController != null) {
-            mScrimController.setHasBackdrop(hasArtwork);
-        }
 
-        if ((hasArtwork || DEBUG_MEDIA_FAKE_ARTWORK)
+        if ((hasArtwork || DEBUG_MEDIA_FAKE_ARTWORK) && !mDozing
                 && (mState != StatusBarState.SHADE || allowWhenShade)
                 && mFingerprintUnlockController.getMode()
                         != FingerprintUnlockController.MODE_WAKE_AND_UNLOCK_PULSING
@@ -1833,6 +1681,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     mBackdrop.setAlpha(1f);
                 }
                 mStatusBarWindowManager.setBackdropShowing(true);
+                mColorExtractor.setMediaBackdropVisible(true);
                 metaDataChanged = true;
                 if (DEBUG_MEDIA) {
                     Log.v(TAG, "DEBUG_MEDIA: Fading in album artwork");
@@ -1884,6 +1733,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 if (DEBUG_MEDIA) {
                     Log.v(TAG, "DEBUG_MEDIA: Fading out album artwork");
                 }
+                mColorExtractor.setMediaBackdropVisible(false);
                 boolean cannotAnimateDoze = mDozing && !ScrimState.AOD.getAnimateChange();
                 if (mFingerprintUnlockController.getMode()
                         == FingerprintUnlockController.MODE_WAKE_AND_UNLOCK_PULSING
@@ -2261,8 +2111,8 @@ public class StatusBar extends SystemUI implements DemoMode,
      * or not when showing the bouncer.
      *
      * We want to hide it when:
-     * â€¢ User swipes up on the keyguard
-     * â€¢ Locked activity that doesn't show a status bar requests the bouncer
+     * • User swipes up on the keyguard
+     * • Locked activity that doesn't show a status bar requests the bouncer
      *
      * @param animate should the change of the icons be animated.
      */
@@ -3039,36 +2889,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         pw.println(BarTransitions.modeToString(transitions.getMode()));
     }
 
-    private int isNetworkAvailable() {
-        final ConnectivityManager connectivityManager 
-              = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        final NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        final Network network = connectivityManager.getActiveNetwork();
-        final NetworkCapabilities capabilities = connectivityManager
-            .getNetworkCapabilities(network);
-
-        /**
-         * Return -1 if We don't have any network connectivity
-         * Return 0 if we are on WiFi  (desired)
-         * Return 1 if we are on MobileData (Little less desired)
-         * Return 2 if not sure which connection is user on but has network connectivity 
-         */
-
-        // NetworkInfo object will return null in case device is in flight mode.
-        if (activeNetworkInfo == null)
-            return -1;
-        else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI))
-            return 0;
-        else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR))
-            return 1;
-        else if (capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) 
-            && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED))
-            return 2;
-        else
-            return -1;
-    }
-
-
     public void createAndAddWindows() {
         addStatusBarWindow();
     }
@@ -3295,32 +3115,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     };
 
-    private final BroadcastReceiver ambientReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            final int whichNetwork = isNetworkAvailable();
-
-            // Only start recording audio if we have internet connectivity.
-            if (whichNetwork != -1) {
-                new Thread() {
-                    @Override
-                    public void run() {
-                        Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
-                        try {
-                            doAmbientRecognition();
-                            Thread.currentThread().sleep(AMBIENT_RECOGNITION_INTERVAL_MAX);
-                            // Stop recording, process audio and post result.
-                            doStopAmbientRecognition();
-                        } catch (InterruptedException e) {
-                        }
-                    }
-                }.start();
-            }
-            // Schedule it for the next time.
-            scheduleAmbientPlayAlarm(whichNetwork);
-        }
-    };
-
     public void resetUserExpandedStates() {
         ArrayList<Entry> activeNotifications = mEntryManager.getNotificationData()
                 .getActiveNotifications();
@@ -3368,7 +3162,6 @@ public class StatusBar extends SystemUI implements DemoMode,
     public void onConfigChanged(Configuration newConfig) {
         updateResources();
         updateDisplaySize(); // populates mDisplayMetrics
-        updateTheme();
 
         if (DEBUG) {
             Log.v(TAG, "configuration changed: " + mContext.getResources().getConfiguration());
@@ -3621,7 +3414,6 @@ public class StatusBar extends SystemUI implements DemoMode,
     public void destroy() {
         // Begin old BaseStatusBar.destroy().
         mContext.unregisterReceiver(mBannerActionBroadcastReceiver);
-        mContext.unregisterReceiver(ambientReceiver);
         mLockscreenUserManager.destroy();
         try {
             mNotificationListener.unregisterAsSystemService();
@@ -4062,15 +3854,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     }
 
-    private void updateAmbientIndicationForKeyguard() {
-        int recognitionKeyguard = Settings.Secure.getInt(
-            mContext.getContentResolver(), AMBIENT_RECOGNITION_KEYGUARD, 1);
-        if (!mRecognitionEnabled) return;
-        if (mAmbientIndicationContainer != null && recognitionKeyguard != 0) {
-            mAmbientIndicationContainer.setVisibility(View.VISIBLE);
-        }
-    }
-
     protected void updateKeyguardState(boolean goingToFullShade, boolean fromShadeLocked) {
         Trace.beginSection("StatusBar#updateKeyguardState");
         if (mState == StatusBarState.KEYGUARD) {
@@ -4080,7 +3863,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                 mKeyguardUserSwitcher.setKeyguard(true, fromShadeLocked);
             }
             if (mStatusBarView != null) mStatusBarView.removePendingHideExpandedRunnables();
-            updateAmbientIndicationForKeyguard();
+            if (mAmbientIndicationContainer != null) {
+                mAmbientIndicationContainer.setVisibility(View.VISIBLE);
+            }
         } else {
             mKeyguardIndicationController.setVisible(false);
             if (mKeyguardUserSwitcher != null) {
@@ -4108,77 +3893,19 @@ public class StatusBar extends SystemUI implements DemoMode,
         Trace.endSection();
     }
 
-    // Observer will trigger this function, no need to call it manually.
-    private void initAmbientRecognition() {
-        mRecognitionEnabled = Settings.Secure.getInt(mContext.getContentResolver(),
-                AMBIENT_RECOGNITION, 0) != 0;
-    }
-
-    private void doAmbientRecognition() {
-        mRecognition = new RecoginitionObserverFactory(mContext);
-        mRecognition.startRecording();
-    }
-
-    private void doStopAmbientRecognition() {
-        // If mRecognition is not initialized this means we have not started the recording, thus using stopRecording() will give NPE.
-        // So, just let's go directly in handler, doAmbientRecognition() will do the work for us.
-        if (mRecognition != null)
-            mRecognition.stopRecording();
-
-        // Set this null so that GC can clear this up, as we are initiating this object again in doAmbientRecognition()
-        mRecognition = null;
-    }
-
-    private void scheduleAmbientPlayAlarm(int networkType) {
-        // Check user's pref
-        if (!mRecognitionEnabled) return;
-
-        int duration = 150000;
-
-        /**
-         * Let's try to reduce battery consumption here.
-         *  - If device is charging then let's not worry about scan interval and let's scan every 2 minutes, else
-         *  - If device is not able to find matches for 20 consecutive times.
-         *    then chances are that user is probably not listening to music or maybe sleeping
-         *    So, Bump the scan interval to 5 minutes, else
-         *  - If device is on WiFi then let scan duration be 2 minutes and 30 seconds, or
-         *  - If device is on Mobile Data or anything else then let's set it to 3 minutes.
-         */
-        
-        if (mBatteryManager.isCharging())
-            duration = 120000;
-        else if (NO_MATCH_COUNT >= 20)
-            duration = 300000;
-        else if (networkType == 0)
-            duration = 150000;
-        else if (networkType == 1 || networkType == 2)
-            duration = 180000;
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, AP_REQUEST_CODE, AP_INTENT, 0);
-        alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + duration, pendingIntent);
-    }
-
     /**
      * Switches theme from light to dark and vice-versa.
      */
     protected void updateTheme() {
-        updateTheme(false);
-    }
+        final boolean inflated = mStackScroller != null;
 
-    protected void updateTheme(boolean fromPowerSaveCallback) {
-        final boolean inflated = mStackScroller != null && mStatusBarWindowManager != null;
-        final UiModeManager umm = mContext.getSystemService(UiModeManager.class);
         // The system wallpaper defines if QS should be light or dark.
-        final WallpaperColors systemColors = mColorExtractor.getWallpaperColors(WallpaperManager.FLAG_SYSTEM);
-        boolean darkThemeNeeded = systemColors != null && (systemColors.getColorHints() & WallpaperColors.HINT_SUPPORTS_DARK_THEME) != 0;
-        if ((fromPowerSaveCallback || !darkThemeNeeded) && DARK_THEME_IN_NIGHT_MODE && mIsOnPowerSaveMode){
-            darkThemeNeeded = true;
-        }
-        final boolean useDarkTheme = darkThemeNeeded;
+        WallpaperColors systemColors = mColorExtractor
+                .getWallpaperColors(WallpaperManager.FLAG_SYSTEM);
+        final boolean useDarkTheme = systemColors != null
+                && (systemColors.getColorHints() & WallpaperColors.HINT_SUPPORTS_DARK_THEME) != 0;
         if (isUsingDarkTheme() != useDarkTheme) {
             mUiOffloadThread.submit(() -> {
-                umm.setNightMode(useDarkTheme ? UiModeManager.MODE_NIGHT_YES : UiModeManager.MODE_NIGHT_NO);
                 try {
                     mOverlayManager.setEnabled("com.android.systemui.theme.dark",
                             useDarkTheme, mLockscreenUserManager.getCurrentUserId());
@@ -5012,6 +4739,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         boolean dozing = mDozingRequested && mState == StatusBarState.KEYGUARD
                 || mFingerprintUnlockController.getMode()
                         == FingerprintUnlockController.MODE_WAKE_AND_UNLOCK_PULSING;
+        final boolean alwaysOn = DozeParameters.getInstance(mContext).getAlwaysOn();
         // When in wake-and-unlock we may not have received a change to mState
         // but we still should not be dozing, manually set to false.
         if (mFingerprintUnlockController.getMode() ==
@@ -5020,7 +4748,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
         if (mDozing != dozing) {
             mDozing = dozing;
-            mKeyguardViewMediator.setAodShowing(mDozing);
+            mKeyguardViewMediator.setAodShowing(mDozing && alwaysOn);
             mStatusBarWindowManager.setDozing(mDozing);
             mStatusBarKeyguardViewManager.setDozing(mDozing);
             if (mAmbientIndicationContainer instanceof DozeReceiver) {
@@ -5045,10 +4773,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         mScrimController.setExpansionAffectsAlpha(
                 !mFingerprintUnlockController.isFingerprintUnlock());
 
-        boolean launchingAffordanceWithPreview =
-                mNotificationPanel.isLaunchingAffordanceWithPreview();
-        mScrimController.setLaunchingAffordanceWithPreview(launchingAffordanceWithPreview);
-
         if (mBouncerShowing) {
             // Bouncer needs the front scrim when it's on top of an activity,
             // tapping on a notification, editing QS or being dismissed by
@@ -5058,8 +4782,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     || mStatusBarKeyguardViewManager.isFullscreenBouncer() ?
                     ScrimState.BOUNCER_SCRIMMED : ScrimState.BOUNCER;
             mScrimController.transitionTo(state);
-        } else if (isInLaunchTransition() || mLaunchCameraOnScreenTurningOn
-                || launchingAffordanceWithPreview) {
+        } else if (mLaunchCameraOnScreenTurningOn || isInLaunchTransition()) {
             mScrimController.transitionTo(ScrimState.UNLOCKED, mUnlockScrimCallback);
         } else if (mBrightnessMirrorVisible) {
             mScrimController.transitionTo(ScrimState.BRIGHTNESS_MIRROR);
@@ -5152,7 +4875,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                 }
 
                 private void setPulsing(boolean pulsing) {
-                    mKeyguardViewMediator.setPulsing(pulsing);
                     mNotificationPanel.setPulsing(pulsing);
                     mVisualStabilityManager.setPulsing(pulsing);
                     mIgnoreTouchWhilePulsing = false;
@@ -5468,6 +5190,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             // TODO: Some of this code may be able to move to NotificationEntryManager.
             if (mHeadsUpManager != null && mHeadsUpManager.isHeadsUp(notificationKey)) {
                 // Release the HUN notification to the shade.
+
                 if (isPresenterFullyCollapsed()) {
                     HeadsUpUtil.setIsClickedHeadsUpNotification(row, true);
                 }
@@ -5729,34 +5452,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             recomputeDisableFlags(true);
         }
         updateHideIconsForBouncer(true /* animate */);
-    }
-
-    private AmbientSettingsObserver mAmbientSettingsObserver = new AmbientSettingsObserver(mHandler);
-    private class AmbientSettingsObserver extends ContentObserver {
-        AmbientSettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(Settings.Secure.getUriFor(
-                    Settings.Secure.AMBIENT_RECOGNITION),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.Secure.getUriFor(
-                    Settings.Secure.AMBIENT_RECOGNITION_KEYGUARD),
-                    false, this, UserHandle.USER_ALL);
-        }
-
-        @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            update();
-        }
-
-        public void update() {
-            initAmbientRecognition();
-            updateAmbientIndicationForKeyguard();
-            scheduleAmbientPlayAlarm(isNetworkAvailable());
-        }
     }
 
     protected void toggleKeyboardShortcuts(int deviceId) {
