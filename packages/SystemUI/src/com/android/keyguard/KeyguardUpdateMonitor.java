@@ -1055,10 +1055,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
         }
 
         public final int getChargingSpeed(int slowThreshold, int fastThreshold) {
-            return dashChargeStatus ? CHARGING_DASH :
-                    turboPowerStatus ? CHARGING_TURBO_POWER :
-                    superChargeStatus ? CHARGING_SUPER :
-                    maxChargingWattage <= 0 ? CHARGING_UNKNOWN :
+            return  maxChargingWattage <= 0 ? CHARGING_UNKNOWN :
                     maxChargingWattage < slowThreshold ? CHARGING_SLOWLY :
                     maxChargingWattage > fastThreshold ? CHARGING_FAST :
                     CHARGING_REGULAR;
@@ -1715,21 +1712,6 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
 
         // change in charging current while plugged in
         if (nowPluggedIn && current.maxChargingWattage != old.maxChargingWattage) {
-            return true;
-        }
-
-        // change in dash charging while plugged in
-        if (nowPluggedIn && current.dashChargeStatus != old.dashChargeStatus) {
-            return true;
-        }
-
-        // change in turbo power charging while plugged in
-        if (nowPluggedIn && current.turboPowerStatus != old.turboPowerStatus) {
-            return true;
-        }
-
-        // change in super charging while plugged in
-        if (nowPluggedIn && current.superChargeStatus != old.superChargeStatus) {
             return true;
         }
 
