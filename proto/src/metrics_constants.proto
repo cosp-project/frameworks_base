@@ -6437,5 +6437,8 @@ message MetricsEvent {
     // CustomSettings constant
     CUSTOM_SETTINGS = 1554;
 
+    // COSPSettings constant
+    COSP_SETTINGS = 1700;
+
   }
 }
