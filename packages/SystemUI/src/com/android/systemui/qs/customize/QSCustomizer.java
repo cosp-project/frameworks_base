@@ -449,9 +449,9 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
         mTileAdapter.setColumnCount(isPortrait ? columns : columnsLandscape);
         mTileAdapter.setHideLabel(!showTitles);
         mLayout.setSpanCount(isPortrait ? columns : columnsLandscape);
-        updateColumnsMenu(defaultColumns);
+        updateColumnsMenu(defaultColumns, defaultRows);
     }
-    private void updateColumnsMenu(int defaultColumns) {
+    private void updateColumnsMenu(int defaultColumns, int defaultRows) {
         int columns = Settings.System.getIntForUser(
                 mContext.getContentResolver(), Settings.System.OMNI_QS_LAYOUT_COLUMNS, defaultColumns,
                 UserHandle.USER_CURRENT);
