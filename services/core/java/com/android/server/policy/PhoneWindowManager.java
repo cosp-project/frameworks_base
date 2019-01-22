@@ -2719,7 +2719,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                  mContext.getContentResolver(), Settings.Secure.NAVIGATION_BAR_ENABLED,
                  res.getBoolean(com.android.internal.R.bool.config_showNavigationBar) ? 1 : 0,
                  UserHandle.USER_CURRENT) == 1;
->>>>>>> 710ba2aa991... Add NavBar toggle [1/2]
 
         // For demo purposes, allow the rotation of the HDMI display to be controlled.
         // By default, HDMI locks rotation to landscape.
