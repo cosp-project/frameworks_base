@@ -918,10 +918,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private GestureButton mGestureButton;
     private boolean mGestureButtonRegistered;
 
-    private boolean mUseGestureButton;
-    private GestureButton mGestureButton;
-    private boolean mGestureButtonRegistered;
-
     private class PolicyHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -2893,7 +2889,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mWindowManagerFuncs.unregisterPointerEventListener(mGestureButton);
             mGestureButtonRegistered = false;
         }
-<<<<<<< HEAD
     }
     
     private void updateKeydisabler(){
@@ -2904,8 +2899,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         } catch (Exception e) {
             Slog.w(TAG, "KeyDisabler operation failed", e);
         }
-=======
->>>>>>> 86087978e09... [1/2] base: implement OP like navigation gestures
     }
 
     private void updateWakeGestureListenerLp() {
@@ -5225,11 +5218,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 updateSystemUiVisibilityLw();
             }
 
-<<<<<<< HEAD
-            if (!mHasNavigationBar && mUseGestureButton && mGestureButton != null) {
-=======
             if (!hasNavigationBar() && mUseGestureButton && mGestureButton != null) {
->>>>>>> 86087978e09... [1/2] base: implement OP like navigation gestures
                 mGestureButton.navigationBarPosition(displayWidth, displayHeight, displayRotation);
             }
         }
