@@ -6629,6 +6629,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         keyguardIntent.setPackage("com.android.systemui");
         keyguardIntent.putExtra("launch", launchIntent);
         context.sendBroadcastAsUser(keyguardIntent, user);
+    }
 
     final Object mScreenrecordLock = new Object();
     ServiceConnection mScreenrecordConnection = null;
@@ -6700,10 +6701,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mHandler.postDelayed(mScreenrecordTimeout, 32 * 60 * 1000);
             }
         }
-    }
-
-    private boolean isHwKeysDisabled() {
-        return mKeyHandler != null ? mKeyHandler.isHwKeysDisabled() : false;
     }
 
     /** {@inheritDoc} */
