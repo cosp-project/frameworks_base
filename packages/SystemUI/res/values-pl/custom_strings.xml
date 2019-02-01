@@ -11,11 +11,71 @@
     <string name="keyguard_indication_super_charging_time">Szybkie ładowanie (<xliff:g id="pozostały_czas" example="4 godziny i 2 minuty">%s</xliff:g> do pełna)</string>
     <string name="keyguard_plugged_in_super_charging">Szybkie ładowanie</string>
     <!-- Screen pinning dialog description. (for devices without navbar) -->
-    <string name="screen_pinning_description_no_navbar">Pozostanie to widoczne, gdy nie odepniesz. Przytrzymaj \"Wstecz\" aby odpiąć.</string>
+    <string name="screen_pinning_description_no_navbar">Pozostanie to widoczne, dopóki nie odepniesz. Przytrzymaj \"Wstecz\" aby odpiąć.</string>
     <!-- Notify use that they are in Lock-to-app (for devices without navbar)-->
-    <string name="screen_pinning_toast_no_navbar">Aby odpiąć ten ekran, naciśnij &amp; przytrzymaj Wstecz</string>
+    <string name="screen_pinning_toast_no_navbar">Aby odpiąć ten ekran, naciśnij i przytrzymaj Wstecz</string>
     <!-- Screen pinning dialog description. (for devices without navbar and with gestures on fingerprint sensor) -->
-    <string name="screen_pinning_description_no_navbar_fpsensor">Dzięki temu będzie on widoczny aż do odpięcia. Dotknij &amp; przytrzymaj czujnik odcisków palców, aby odpiąć.</string>
+    <string name="screen_pinning_description_no_navbar_fpsensor">Dzięki temu będzie on widoczny aż do odpięcia. Dotknij i przytrzymaj czytnik linii papilarnych, aby odpiąć.</string>
     <!-- Notify use that they are in Lock-to-app (for devices without navbar and with gestures on fingerprint sensor)-->
-    <string name="screen_pinning_toast_no_navbar_fpsensor">Aby odpiąć ten ekran, naciśnij &amp; przytrzymaj czujnik odcisków palców</string>
+    <string name="screen_pinning_toast_no_navbar_fpsensor">Aby odpiąć ten ekran, naciśnij i przytrzymaj czytnik linii papilarnych</string>
+	
+    <!-- QS Config -->
+    <string name="qs_menu_item_columns">Kolumny</string>
+    <string name="qs_menu_item_columns_landscape">Kolumny w poziomie</string>
+    <string name="qs_menu_item_reset">Reset</string>
+    <string name="qs_menu_item_titles">Pokaż etykiety</string>
+    <string name="qs_menu_item_rows">Rzędy</string>
+
+    <string name="statusbar_items_title">Ikony paska statusu</string>
+
+    <string name="preview">Podgląd</string>
+    <string name="keycode">Kod klawisza</string>
+    <string name="no_home_title">Nie znaleziono przycisku Ekran główny</string>
+    <string name="no_home_message">Aby móc nawigować po urządzeniu, konieczny jest przycisk Ekranu głównego. Dodaj go przed zapisaniem zmian.</string>
+    <string name="clipboard_description">Schowek umożliwia przeciąganie elementów bezpośrednio do schowka. Elementy można również przeciągać bezpośrednio ze schowka, gdy są one tam obecne.</string>
+    <string name="keycode_description">Przyciski kodów klawiszy umożliwiają dodawanie klawiszy klawiatury do paska nawigacji. Po naciśnięciu emulują one wybrany klawisz klawiatury. Najpierw należy wybrać klawisz dla przycisku, a następnie obraz, który ma zostać wyświetlony na tymże przycisku.</string>
+    <string name="nav_start">Start</string>
+    <string name="nav_center">Centrum</string>
+    <string name="nav_end">Koniec</string>
+    <string name="nav_space">Spacer</string>
+    <string name="menu_ime_rotate">Menu / Przełącznik klawiatury</string>
+    <string name="select_button">Wybierz przycisk, aby dodać</string>
+    <string name="add_button">Dodaj przycisk</string>
+    <string name="select_keycode">Wybierz przycisk klawiatury</string>
+    <string name="navbar_editor_title">Edytor</string>
+    <string name="navbar_editor_summary">Skonfiguruj pasek nawigacji</string>
+
+    <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Zrzut ekranu</string>
+    <string name="quick_settings_region_screenshot_label">Częściowy zrzut ekranu</string>
+
+    <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">Usunięto zrzut ekranu</string>
+
+    <string name="screenshot_abort_title">Nie wykonano zrzutu ekranu</string>
+    <string name="screenshot_abort_text">Operacja anulowana.</string>
+
+    <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Trwa nagrywanie ekranu</string>
+    <string name="screenrecord_notif_final_ticker">Pomyślnie nagrano ekran</string>
+    <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Nagrywanie ekranu</string>
+    <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Stop</string>
+    <string name="screenrecord_notif_completed">Pomyślnie nagrano ekran</string>
+    <string name="screenrecord_notif_duration">Łącznie:</string>
+    <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Pokaż wskaźnik</string>
+    <string name="screenrecord_notif_pointer_off">Ukryj wskaźnik</string>
+    <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Nie można nagrać ekranu</string>
+    <string name="notification_channel_screenrecord">Nagrywanie ekranu</string>
+
+    <!-- Screenrecord QS tile -->
+    <string name="quick_settings_screenrecord_label">Nagrywanie ekranu</string>
+    <string name="quick_settings_screenrecord_lq_label">Nagrywanie ekranu LQ</string>
+    <string name="quick_settings_screenrecord_mq_label">Nagrywanie ekranu MQ</string>
+    <string name="quick_settings_screenrecord_hq_label">Nagrywanie ekranu HQ</string>
+    <string name="screenrecord_hide_hint">Ukryj podpowiedź</string>
+    <string name="screenrecord_show_hint">Pokaż podpowiedź</string>
 </resources>
