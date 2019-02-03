@@ -39,6 +39,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.PowerManager;
+import android.os.UserHandle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.AttributeSet;
