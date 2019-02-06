@@ -93,4 +93,8 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Smart pixels</string>
     <string name="quick_settings_smart_pixels_on_power_save">Auto-enabled smart pixels</string>
+
+    <!-- Elmyra -->
+    <string name="elmyra_raw_sensor_string_type">com.google.sensor.elmyra.raw</string>
+    <string name="google_camera_app_package_name">com.google.android.GoogleCamera</string>
 </resources>
