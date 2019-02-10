@@ -87,7 +87,6 @@ public class StatusBarWindowView extends FrameLayout {
     private NotificationStackScrollLayout mStackScrollLayout;
     private NotificationPanelView mNotificationPanel;
     private View mBrightnessMirror;
-    private PhoneStatusBarView mStatusBarView;
 
     private int mRightInset = 0;
     private int mLeftInset = 0;
@@ -223,10 +222,6 @@ public class StatusBarWindowView extends FrameLayout {
         if (child.getId() == R.id.brightness_mirror) {
             mBrightnessMirror = child;
         }
-    }
-
-    public void setStatusBarView(PhoneStatusBarView statusBarView) {
-        mStatusBarView = statusBarView;
     }
 
     public void setService(StatusBar service) {
@@ -372,7 +367,7 @@ public class StatusBarWindowView extends FrameLayout {
             expandingBelowNotch = true;
         }
         if (expandingBelowNotch) {
-            return mStatusBarView.dispatchTouchEvent(ev);
+            return mNotificationPanel.dispatchTouchEvent(ev);
         }
 
         return super.dispatchTouchEvent(ev);
