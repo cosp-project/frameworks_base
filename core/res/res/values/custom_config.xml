@@ -176,6 +176,9 @@
     <bool name="config_useDarkBgNotificationTinting_override">false</bool>
     <bool name="config_notificationTinting_override">false</bool>
 
+    <!-- Whether to show battery percentage inside icon -->
+    <bool name="config_battery_percentage_show_inside_icon">false</bool>
+
     <!-- True if the notifications should tint the app name with the dynamic or the accent color -->
     <bool name="config_allowNotificationAppNameTextTinting">false</bool>
 
