@@ -2413,11 +2413,6 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
 
         if (DEBUG_SWITCH) Slog.v(TAG_SWITCH, "Resuming " + next);
 
-        if (mService.isAppBroadcastAllowed() && prev != next) {
-            String nextActivePackageName = next.intent.getComponent().getPackageName();
-            ThermalController.sendActivePackageChangedBroadcast(nextActivePackageName, mService.getContext());
-        }
-
         // If we are currently pausing an activity, then don't do anything until that is done.
         if (!mStackSupervisor.allPausedActivitiesComplete()) {
             if (DEBUG_SWITCH || DEBUG_PAUSE || DEBUG_STATES) Slog.v(TAG_PAUSE,
