@@ -4860,7 +4860,7 @@ public class Notification implements Parcelable
                 setTextViewColorPrimary(contentView, R.id.app_name_text);
             } else {
                 contentView.setTextColor(R.id.app_name_text,
-                        ambient ? resolveAmbientColor() : resolveAppNameTinting());
+                        ambient ? resolveAmbientColor() : getSecondaryTextColor());
             }
         }
 
@@ -5461,14 +5461,6 @@ public class Notification implements Parcelable
         private void sanitizeColor() {
             if (mN.color != COLOR_DEFAULT) {
                 mN.color |= 0xFF000000; // no alpha for custom colors
-            }
-        }
-
-        int resolveAppNameTinting() {
-            if (!mContext.getResources().getBoolean(R.bool.config_allowNotificationAppNameTextTinting)) {
-                return getSecondaryTextColor();
-            } else {
-                return resolveContrastColor();
             }
         }
 

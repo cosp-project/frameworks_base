@@ -179,9 +179,6 @@
     <!-- Whether to show battery percentage inside icon -->
     <bool name="config_battery_percentage_show_inside_icon">false</bool>
 
-    <!-- True if the notifications should tint the app name with the dynamic or the accent color -->
-    <bool name="config_allowNotificationAppNameTextTinting">false</bool>
-
     <!-- If this is true, key chords can be used to take a screen record on the device. -->
     <bool name="config_enableScreenrecordChord">true</bool>
 
