@@ -35,9 +35,6 @@
     <!-- Whether device has super charging support -->
     <java-symbol type="bool" name="config_hasSuperCharger" />
 
-    <!-- Leds -->
-    <java-symbol type="bool" name="config_intrusiveBatteryLed" />
-
     <!-- Button backlight -->
     <java-symbol type="integer" name="config_buttonBrightnessSettingDefault" />
     <java-symbol type="bool" name="config_deviceHasVariableButtonBrightness" />
