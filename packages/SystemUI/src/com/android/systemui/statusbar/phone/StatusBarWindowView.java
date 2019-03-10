@@ -849,11 +849,6 @@ public class StatusBarWindowView extends FrameLayout {
         }
     };
 
-    class SettingsObserver extends ContentObserver {
-        SettingsObserver(Handler handler) {
-            super(handler);
-        }
-		
     public void setLockscreenDoubleTapToSleep() {
         boolean isDoubleTapEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN, 1, UserHandle.USER_CURRENT) == 1;
@@ -861,7 +856,11 @@ public class StatusBarWindowView extends FrameLayout {
             mNotificationPanel.setLockscreenDoubleTapToSleep(isDoubleTapEnabled);
         }
     }
-}
+
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
 
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
@@ -890,5 +889,5 @@ public class StatusBarWindowView extends FrameLayout {
             mDoubleTapToSleepEnabled = Settings.System.getInt(
                     resolver, Settings.System.DOUBLE_TAP_SLEEP_GESTURE, 1) == 1;
         }
-    }
+	}
 }
