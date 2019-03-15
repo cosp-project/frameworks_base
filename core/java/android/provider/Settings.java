@@ -4425,10 +4425,7 @@ public final class Settings {
 
         /** @hide */
         public static final Validator CAMERA_LAUNCH_VALIDATOR =
-                BOOLEAN_VALIDATOR;
-
-        /** @hide */
-        public static final String IGNORE_RSSNR = "ignore_rssnr";        
+                BOOLEAN_VALIDATOR;  
 
 
          /**
