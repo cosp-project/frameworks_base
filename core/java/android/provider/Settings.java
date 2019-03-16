@@ -4766,6 +4766,16 @@ public final class Settings {
         public static final String RECENTS_COMPONENT = "recents_component";
 
         /**
+         * Display cutout
+         * @hide
+         */
+        public static final String DISPLAY_CUTOUT_HIDDEN = "display_cutout_hidden";
+
+        /** @hide */
+        private static final Validator DISPLAY_CUTOUT_HIDDEN_VALIDATOR = new
+                SettingsValidators.InclusiveIntegerRangeValidator(0, 1);
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -5005,6 +5015,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_DATE_DISPLAY);
             PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_DATE_STYLE);
             PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_DATE_FORMAT);
+            PRIVATE_SETTINGS.add(DISPLAY_CUTOUT_HIDDEN);
         }
 
         /**
@@ -5139,6 +5150,7 @@ public final class Settings {
             VALIDATORS.put(STATUSBAR_CLOCK_DATE_DISPLAY, STATUSBAR_CLOCK_DATE_DISPLAY_VALIDATOR);
             VALIDATORS.put(STATUSBAR_CLOCK_DATE_STYLE, STATUSBAR_CLOCK_DATE_STYLE_VALIDATOR);
             VALIDATORS.put(STATUSBAR_CLOCK_DATE_FORMAT, STATUSBAR_CLOCK_DATE_FORMAT_VALIDATOR);
+            VALIDATORS.put(DISPLAY_CUTOUT_HIDDEN, DISPLAY_CUTOUT_HIDDEN_VALIDATOR);
         }
 
         /**
