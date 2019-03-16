@@ -1301,7 +1301,8 @@ public class VolumeDialogImpl implements VolumeDialog {
     }
 
     private boolean isAudioPanelOnLeftSide() {
-        return mLeftVolumeRocker;
+	return mContext.getResources()
+                .getBoolean(R.bool.config_audioPanelOnLeftSide);
     }
 
     private static class VolumeRow {
