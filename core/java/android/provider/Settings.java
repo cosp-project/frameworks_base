@@ -4577,16 +4577,6 @@ public final class Settings {
         /**
 
         /**
-         * Face auto unlock
-         * @hide
-         */
-        public static final String FACE_AUTO_UNLOCK = "face_auto_unlock";
-
-         /** @hide */
-        public static final Validator FACE_AUTO_UNLOCK_VALIDATOR =
-                BOOLEAN_VALIDATOR;
-
-        /**
          * Number of qs columns on landscape orientation
          * @hide
          */
@@ -5011,7 +5001,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(CUSTOM_DEVICE_PROXI_CHECK_ENABLED);
             PRIVATE_SETTINGS.add(CUSTOM_DEVICE_GESTURE_FEEDBACK_ENABLED);
             PRIVATE_SETTINGS.add(CUSTOM_DEVICE_FEATURE_SETTINGS);
-            PRIVATE_SETTINGS.add(FACE_AUTO_UNLOCK);
             PRIVATE_SETTINGS.add(OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE);
             PRIVATE_SETTINGS.add(OMNI_QS_LAYOUT_COLUMNS);
             PRIVATE_SETTINGS.add(OMNI_QS_TILE_TITLE_VISIBILITY);
@@ -5146,7 +5135,6 @@ public final class Settings {
             VALIDATORS.put(CUSTOM_DEVICE_PROXI_CHECK_ENABLED, CUSTOM_DEVICE_PROXI_CHECK_ENABLED_VALIDATOR);
             VALIDATORS.put(CUSTOM_DEVICE_GESTURE_FEEDBACK_ENABLED, CUSTOM_DEVICE_GESTURE_FEEDBACK_ENABLED_VALIDATOR);
             VALIDATORS.put(CUSTOM_DEVICE_FEATURE_SETTINGS, CUSTOM_DEVICE_FEATURE_SETTINGS_VALIDATOR);
-            VALIDATORS.put(FACE_AUTO_UNLOCK, FACE_AUTO_UNLOCK_VALIDATOR);
             VALIDATORS.put(OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE,
                     OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE_VALIDATOR);
             VALIDATORS.put(OMNI_QS_LAYOUT_COLUMNS, OMNI_QS_LAYOUT_COLUMNS_VALIDATOR);
