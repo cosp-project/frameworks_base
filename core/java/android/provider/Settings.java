@@ -4704,7 +4704,6 @@ public final class Settings {
         private static final Validator OMNI_BOTTOM_GESTURE_TRIGGER_TIMEOUT_VALIDATOR =
                  ANY_INTEGER_VALIDATOR;
 
-
         /**
          * @hide
          */
@@ -4763,16 +4762,6 @@ public final class Settings {
          * @hide
          */
         public static final String HEADS_UP_NOTIFICATION_SNOOZE = "heads_up_notification_snooze";
-
-        /**
-         * @hide
-         */
-        public static final String TORCH_LONG_PRESS_POWER_GESTURE = "torch_long_press_power_gesture";
-
-        /**
-         * @hide
-         */
-        public static final String TORCH_LONG_PRESS_POWER_TIMEOUT = "torch_long_press_power_timeout";
 
         /**
          * Which component to use for Recents UI
