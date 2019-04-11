@@ -18,4 +18,114 @@
     <string name="screen_pinning_description_no_navbar_fpsensor">Приложение остаётся активным, до тех пор, пока вы не отмените блокировку. Нажмите и удерживайте палец на сканере отпечатков, чтобы отменить блокировку.</string>
     <!-- Notify use that they are in Lock-to-app (for devices without navbar and with gestures on fingerprint sensor)-->
     <string name="screen_pinning_toast_no_navbar_fpsensor">Чтобы разблокировать экран, нажмите и удерживайте палец на сканере отпечатков пальцев</string>
+	
+	<!-- QS Config -->
+    <string name="qs_menu_item_columns">Столбцы</string>
+    <string name="qs_menu_item_columns_landscape">Фон Столбцов</string>
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_reset">Сброс</string>
+    <string name="qs_menu_item_titles">Показывать названия</string>
+    <string name="qs_menu_item_rows">Строки</string>
+    <string name="qs_menu_item_rows_landscape">Фон строк</string>
+    <string name="qs_menu_item_rows_one">1</string>
+    <string name="qs_menu_item_rows_two">2</string>
+    <string name="qs_menu_item_rows_three">3</string>
+    <string name="qs_menu_item_rows_four">4</string>
+    <string name="qs_menu_item_qs_columns">Столбцы QuickBar</string>
+
+    <string name="statusbar_items_title">Иконки статусбара</string>
+
+    <string name="preview">Предпросмотр</string>
+    <string name="keycode">Ключевой код</string>
+    <string name="no_home_title">Не найдена кнопка Домой</string>
+    <string name="no_home_message">Кнопка домой обязательная для навигации на этом девайсе. Пожалуйста, добавьте её перед сохранением</string>
+    <string name="clipboard_description">Буфер обмена позволяет перетаскивать элементы прямо в буфер обмена. Предметы также можно перетаскивать прямо из буфера обмена, если они есть.</string>
+    <string name="keycode_description">Кнопки кодов клавиш позволяют добавлять клавиши клавиатуры на панель навигации. При нажатии они эмулируют выбранную клавиатуру. Сначала необходимо выбрать ключ для кнопки, а затем изображение, отображаемое на кнопке.</string>
+    <string name="nav_start">Начало</string>
+    <string name="nav_center">Центр</string>
+    <string name="nav_end">Конец</string>
+    <string name="nav_space">Распорка</string>
+    <string name="menu_ime_rotate">Переключатель Меню/Клавиатуры</string>
+    <string name="select_button">Выберите кнопку, которую добавить</string>
+    <string name="add_button">Добавить кнопку</string>
+    <string name="select_keycode">Выбрать кнопку клавиатуры</string>
+    <string name="navbar_editor_title">Редактор</string>
+    <string name="navbar_editor_summary">Конфигурировать навбар</string>
+
+    <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Скриншот</string>
+    <string name="quick_settings_region_screenshot_label">Частичный скриншот</string>
+
+    <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">Скриншот удалён</string>
+
+    <string name="screenshot_abort_title">Скриншот не был сделан</string>
+    <string name="screenshot_abort_text">Операция прервана.</string>
+
+    <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Экран записывается</string>
+    <string name="screenrecord_notif_final_ticker">Экран был записан успешно</string>
+    <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Запись экрана</string>
+    <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Стоп</string>
+    <string name="screenrecord_notif_completed">Экран был записан успешно</string>
+    <string name="screenrecord_notif_duration">Всего:</string>
+    <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Показать указатель</string>
+    <string name="screenrecord_notif_pointer_off">Скрывать указатель</string>
+    <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Невозможно записать экран</string>
+    <string name="notification_channel_screenrecord">Записи экрана</string>
+
+    <!-- Screenrecord QS tile -->
+    <string name="quick_settings_screenrecord_label">Запись экрана</string>
+    <string name="quick_settings_screenrecord_lq_label">Запись экрана в LQ</string>
+    <string name="quick_settings_screenrecord_mq_label">Запись экрана в MQ</string>
+    <string name="quick_settings_screenrecord_hq_label">Запись экрана в HQ</string>
+    <string name="screenrecord_hide_hint">Скрывать подсказку</string>
+    <string name="screenrecord_show_hint">Показать подсказку</string>
+
+    <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">Умные Пиксели</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Автоматически включены Умные Пиксели</string>
+
+    <!-- Elmyra -->
+    <string name="elmyra_raw_sensor_string_type">com.google.sensor.elmyra.raw</string>
+    <string name="google_camera_app_package_name">com.google.android.GoogleCamera</string>
+
+    <!-- Heads up QS tile -->
+    <string name="quick_settings_heads_up_label">Heads Up увед.</string>
+    <string name="accessibility_quick_settings_heads_up_off">Heads up увед. выключены.</string>
+    <string name="accessibility_quick_settings_heads_up_on">Heads up увед. включены.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">Heads up увед. были выключены.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">Heads up увед. было включены.</string>
+
+    <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Звуки</string>
+    <string name="quick_settings_sound_ring">Вызовы</string>
+    <string name="quick_settings_sound_vibrate">Вибрация</string>
+    <string name="quick_settings_sound_dnd">Не беспокоить</string>
+
+    <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Peeking уведомления отключены на 1 минуту.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Peeking уведомления отключены на <xliff:g id="number">%d</xliff:g> минут(ы).</string>
+
+    <!-- Caffeine QS Tile -->
+    <string name="quick_settings_caffeine_label">Кофеин</string>
+    <string name="accessibility_quick_settings_caffeine_off">Кофеин выключён</string>
+    <string name="accessibility_quick_settings_caffeine_on">Кофеин включён</string>
+
+    <!-- Volume panel QS tile -->
+    <string name="quick_settings_volume_panel_label">Панель регулировки звука</string>
+	
+    <!-- Power Menu -->
+    <string name="global_action_reboot">Перезагрузка</string>
+    <string name="global_action_reboot_recovery">Режим восстановления</string>
 </resources>
