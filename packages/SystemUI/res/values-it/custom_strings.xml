@@ -18,4 +18,114 @@
     <string name="screen_pinning_description_no_navbar_fpsensor">La schermata rimarrà in primo piano finché non la abloccherai. Tocca &amp; tieni premuto il sensore d\'impronte digitali per sbloccarla.</string>
     <!-- Notify use that they are in Lock-to-app (for devices without navbar and with gestures on fingerprint sensor)-->
     <string name="screen_pinning_toast_no_navbar_fpsensor">Per sbloccare questa schermata, tocca &amp; tieni premuto il sensore d\'impronte digitali</string>
+	
+	<!-- QS Config -->
+    <string name="qs_menu_item_columns">Colonne</string>
+    <string name="qs_menu_item_columns_landscape">Colonne orizzontali</string>
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_reset">Reset</string>
+    <string name="qs_menu_item_titles">Mostra scritte</string>
+    <string name="qs_menu_item_rows">Righe</string>
+    <string name="qs_menu_item_rows_landscape">Righe orizzontali</string>
+    <string name="qs_menu_item_rows_one">1</string>
+    <string name="qs_menu_item_rows_two">2</string>
+    <string name="qs_menu_item_rows_three">3</string>
+    <string name="qs_menu_item_rows_four">4</string>
+    <string name="qs_menu_item_qs_columns">Colonne barra rapida</string>
+
+    <string name="statusbar_items_title">Icone barra di stato</string>
+
+    <string name="preview">Anteprima</string>
+    <string name="keycode">Chiave</string>
+    <string name="no_home_title">Nessun bottone home trovato</string>
+    <string name="no_home_message">Il bottone home è necessario per navigare in questo dispositivo. Aggiungi un bottone home prima di salvare.</string>
+    <string name="clipboard_description">Gli appunti abilitano a trascinare gli oggetti direttamente in esso. Gli oggetti possono essere anche trascinati direttamente fuori quando presenti.</string>
+    <string name="keycode_description">Keycode buttons allow keyboard keys to be added to the Navigation Bar. When pressed they emulate the selected keyboard key. First the key must be selected for the button, followed by an image to be shown on the button.</string>
+    <string name="nav_start">Inizio</string>
+    <string name="nav_center">Centro</string>
+    <string name="nav_end">Fine</string>
+    <string name="nav_space">Spazio</string>
+    <string name="menu_ime_rotate">Menu / Cambio tastiera</string>
+    <string name="select_button">Seleziona il bottone da aggiungere</string>
+    <string name="add_button">Aggiungi bottone</string>
+    <string name="select_keycode">Seleziona bottone tastiera</string>
+    <string name="navbar_editor_title">Editor</string>
+    <string name="navbar_editor_summary">Configura la barra di navigazione</string>
+
+    <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Screenshot</string>
+    <string name="quick_settings_region_screenshot_label">Screenshot parziale</string>
+
+    <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">Screenshot cancellato</string>
+
+    <string name="screenshot_abort_title">Screenshot non catturato</string>
+    <string name="screenshot_abort_text">Operazione abortita.</string>
+
+    <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Lo schermo è in fase di registrazione</string>
+    <string name="screenrecord_notif_final_ticker">Registrazione schermo terminata con successo</string>
+    <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Registra schermo</string>
+    <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Stop</string>
+    <string name="screenrecord_notif_completed">Registrazione schermo terminata con successo</string>
+    <string name="screenrecord_notif_duration">Totale:</string>
+    <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Mostra toccho</string>
+    <string name="screenrecord_notif_pointer_off">Nascondi tocco</string>
+    <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Impossibile registrare lo schermo</string>
+    <string name="notification_channel_screenrecord">Registra schermo</string>
+
+    <!-- Screenrecord QS tile -->
+    <string name="quick_settings_screenrecord_label">Registra schermo</string>
+    <string name="quick_settings_screenrecord_lq_label">Registra schermo LQ</string>
+    <string name="quick_settings_screenrecord_mq_label">Registra schermo MQ</string>
+    <string name="quick_settings_screenrecord_hq_label">Registra schermo HQ</string>
+    <string name="screenrecord_hide_hint">Nascondi aiuto</string>
+    <string name="screenrecord_show_hint">Mostra aiuto</string>
+
+    <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">Smart pixels</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Auto-abilita smart pixels</string>
+
+    <!-- Elmyra -->
+    <string name="elmyra_raw_sensor_string_type">com.google.sensor.elmyra.raw</string>
+    <string name="google_camera_app_package_name">com.google.android.GoogleCamera</string>
+
+    <!-- Heads up QS tile -->
+    <string name="quick_settings_heads_up_label">Heads Up</string>
+    <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
+    <string name="accessibility_quick_settings_heads_up_on">Heads up on.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">Heads up inattive.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">Heads up attive.</string>
+
+    <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Suono</string>
+    <string name="quick_settings_sound_ring">Suono</string>
+    <string name="quick_settings_sound_vibrate">Vibrazione</string>
+    <string name="quick_settings_sound_dnd">Non disturbare</string>
+
+    <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Notifiche silenziate per 1 minuto.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Notifiche silenziate per <xliff:g id="number">%d</xliff:g> minuti.</string>
+
+    <!-- Caffeine QS Tile -->
+    <string name="quick_settings_caffeine_label">Caffeina</string>
+    <string name="accessibility_quick_settings_caffeine_off">Caffeina off</string>
+    <string name="accessibility_quick_settings_caffeine_on">Caffeina on</string>
+
+    <!-- Volume panel QS tile -->
+    <string name="quick_settings_volume_panel_label">Pannello volume</string>
+	
+    <!-- Power Menu -->
+    <string name="global_action_reboot">Riavvia</string>
+    <string name="global_action_reboot_recovery">Recovery</string>
 </resources>
