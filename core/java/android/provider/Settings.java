@@ -4816,6 +4816,15 @@ public final class Settings {
                 SettingsValidators.InclusiveIntegerRangeValidator(0, 1);
 
         /**
+         * Force full screen for devices with cutout
+         * @hide
+         */
+        public static final String FORCE_FULLSCREEN_CUTOUT_APPS = "force_full_screen_cutout_apps";
+
+        /** @hide */
+        private static final Validator FORCE_FULLSCREEN_CUTOUT_APPS_VALIDATOR = ANY_STRING_VALIDATOR;
+
+        /**
          * Whether to display cross sign for a data disabled connection
          * @hide
          */
@@ -5113,6 +5122,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DISPLAY_CUTOUT_HIDDEN);
             PRIVATE_SETTINGS.add(FINGERPRINT_SUCCESS_VIB);
             PRIVATE_SETTINGS.add(SWIPE_TO_SCREENSHOT);
+            PRIVATE_SETTINGS.add(FORCE_FULLSCREEN_CUTOUT_APPS);
         }
 
         /**
@@ -5251,6 +5261,7 @@ public final class Settings {
             VALIDATORS.put(VOLUME_KEYS_CONTROL_RING_TONE,VOLUME_KEYS_CONTROL_RING_TONE_VALIDATOR);
             VALIDATORS.put(FINGERPRINT_SUCCESS_VIB, FINGERPRINT_SUCCESS_VIB_VALIDATOR);
             VALIDATORS.put(SWIPE_TO_SCREENSHOT, SWIPE_TO_SCREENSHOT_VALIDATOR);
+            VALIDATORS.put(FORCE_FULLSCREEN_CUTOUT_APPS, FORCE_FULLSCREEN_CUTOUT_APPS_VALIDATOR);
         }
 
         /**
