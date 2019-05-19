@@ -158,4 +158,6 @@ oneway interface IStatusBar
      * Custom utils
      */
     void toggleCameraFlash();
+    void toggleCameraFlashState(boolean enable);
+	
 }

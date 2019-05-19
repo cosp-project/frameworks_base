@@ -117,6 +117,17 @@ public class COSPUtils {
         }
     }
 	
+    public static void toggleCameraFlashState(boolean enable) {
+        IStatusBarService service = getStatusBarService();
+        if (service != null) {
+            try {
+                service.toggleCameraFlashState(enable);
+            } catch (RemoteException e) {
+                // do nothing.s
+            }
+        }
+    }
+	
     public static boolean isPackageInstalled(Context context, String pkg, boolean ignoreState) {
         if (pkg != null) {
             try {

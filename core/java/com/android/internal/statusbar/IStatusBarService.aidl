@@ -107,6 +107,7 @@ interface IStatusBarService
      * Custom utils
      */
     void toggleCameraFlash();
+    void toggleCameraFlashState(boolean enable);
     void toggleNavigationBar(boolean enable);
     void restartUI();
     void toggleRecentApps();
