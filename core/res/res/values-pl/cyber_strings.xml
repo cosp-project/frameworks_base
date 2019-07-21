@@ -16,6 +16,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="reboot_title">Перезагрузка</string>
-    <string name="reboot_message">Перезагрузка системы</string>
+    <string name="reboot_title">Uruchom ponownie</string>
+    <string name="reboot_message">Ponowne uruchamianie</string>
 </resources>
