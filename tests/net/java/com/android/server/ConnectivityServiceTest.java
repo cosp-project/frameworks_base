@@ -3498,7 +3498,7 @@ public class ConnectivityServiceTest {
     @Test
     public void testGetCaptivePortalServerUrl() throws Exception {
         String url = mCm.getCaptivePortalServerUrl();
-        assertEquals("http://httpstat.us/204", url);
+        assertEquals("https://aosdp.com/captive", url);
     }
 
     private static class TestNetworkPinner extends NetworkPinner {

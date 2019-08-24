@@ -101,12 +101,10 @@ public class NetworkMonitor extends StateMachine {
     // Default configuration values for captive portal detection probes.
     // TODO: append a random length parameter to the default HTTPS url.
     // TODO: randomize browser version ids in the default User-Agent String.
-    private static final String DEFAULT_HTTPS_URL     = "http://httpstat.us/204";
-    private static final String DEFAULT_HTTP_URL      =
-            "http://httpstat.us/204";
-    private static final String DEFAULT_FALLBACK_URL  = "http://elementary.io/generate_204";
-    private static final String DEFAULT_OTHER_FALLBACK_URLS =
-            "http://elementary.io/generate_204";
+    private static final String DEFAULT_HTTPS_URL     = "https://aosdp.com/captive";
+    private static final String DEFAULT_HTTP_URL      = "http://aosdp.com/captive";
+    private static final String DEFAULT_FALLBACK_URL  = "https://lushka.ml/captive";
+    private static final String DEFAULT_OTHER_FALLBACK_URLS = "http://lushka.ml/captive";
     private static final String DEFAULT_USER_AGENT    = "Mozilla/5.0 (X11; Linux x86_64) "
                                                       + "AppleWebKit/537.36 (KHTML, like Gecko) "
                                                       + "Chrome/60.0.3112.32 Safari/537.36";
